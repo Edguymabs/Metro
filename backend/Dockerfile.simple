@@ -1,0 +1,34 @@
+# Dockerfile simplifié - UN SEUL STAGE
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Installer OpenSSL, PostgreSQL client et les dépendances système
+RUN apk add --no-cache openssl openssl-dev ca-certificates postgresql-client
+
+# Copier les fichiers de dépendances
+COPY package*.json ./
+COPY tsconfig.json ./
+
+# Installer TOUTES les dépendances (dev + prod)
+RUN npm install
+
+# Copier le code source
+COPY . .
+
+# Générer Prisma (peut échouer si serveur binaries.prisma.sh en panne - sera régénéré au runtime)
+ENV PRISMA_ENGINES_CHECKSUM_IGNORE_MISSING=1
+RUN npx prisma generate || echo "⚠️  Prisma generate échoué pendant le build - sera régénéré au démarrage"
+
+# Compiler TypeScript
+RUN npm run build
+
+# Créer le dossier uploads
+RUN mkdir -p /app/uploads
+
+# Exposer le port
+EXPOSE 5000
+
+# Commande de démarrage - génère Prisma si nécessaire puis démarre
+CMD ["sh", "-c", "PRISMA_ENGINES_CHECKSUM_IGNORE_MISSING=1 npx prisma generate 2>/dev/null || echo 'Using cached Prisma client' && npm start"]
+

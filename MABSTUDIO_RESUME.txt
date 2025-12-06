@@ -1,0 +1,150 @@
+═══════════════════════════════════════════════════════════════
+  🎯 CONFIGURATION PERSONNALISÉE - MABSTUDIO.FR
+═══════════════════════════════════════════════════════════════
+
+Domaine: beta-test-metro.mabstudio.fr
+Type: Beta Test
+Date: 6 décembre 2025
+
+═══════════════════════════════════════════════════════════════
+  📁 FICHIERS CRÉÉS POUR VOUS
+═══════════════════════════════════════════════════════════════
+
+✅ env.mabstudio.example
+   → Configuration pré-remplie pour votre domaine
+
+✅ generate-secrets-mabstudio.sh
+   → Script automatique avec votre domaine configuré
+
+✅ DEPLOIEMENT_MABSTUDIO.md
+   → Guide complet étape par étape (13 sections)
+
+✅ QUICK_START_MABSTUDIO.md
+   → Version ultra-rapide (3 étapes)
+
+✅ CHECKLIST_MABSTUDIO.md
+   → Liste de vérification complète
+
+═══════════════════════════════════════════════════════════════
+  🚀 DÉMARRAGE ULTRA-RAPIDE (3 ÉTAPES)
+═══════════════════════════════════════════════════════════════
+
+1. GÉNÉRER SECRETS (5 min)
+   
+   ./generate-secrets-mabstudio.sh
+   
+   → Secrets automatiquement configurés pour votre domaine
+   → Sauvegarder les secrets affichés !
+
+2. CONFIGURER DNS (5 min)
+   
+   Chez votre registrar (mabstudio.fr):
+   Type: A
+   Nom: beta-test-metro
+   Valeur: [IP de votre VPS]
+   
+   Vérifier:
+   dig beta-test-metro.mabstudio.fr +short
+
+3. DÉPLOYER (2h)
+   
+   Suivre: DEPLOIEMENT_MABSTUDIO.md
+   ou
+   Suivre: QUICK_START_MABSTUDIO.md (version condensée)
+
+═══════════════════════════════════════════════════════════════
+  📋 CONFIGURATION DNS REQUISE
+═══════════════════════════════════════════════════════════════
+
+Enregistrement à créer chez votre registrar:
+
+┌─────────────────────────────────────────────────────────────┐
+│ Type:   A                                                   │
+│ Nom:    beta-test-metro                                     │
+│ Valeur: [Votre IP VPS]                                      │
+│ TTL:    3600                                                │
+└─────────────────────────────────────────────────────────────┘
+
+Résultat attendu:
+beta-test-metro.mabstudio.fr → [IP VPS]
+
+═══════════════════════════════════════════════════════════════
+  🔐 SECRETS À GÉNÉRER
+═══════════════════════════════════════════════════════════════
+
+Le script generate-secrets-mabstudio.sh génère automatiquement:
+
+✅ JWT_SECRET (32+ caractères)
+✅ ENCRYPTION_KEY (32+ caractères)
+✅ POSTGRES_PASSWORD (24+ caractères)
+
+Et crée .env.production pré-configuré avec:
+✅ FRONTEND_URL=https://beta-test-metro.mabstudio.fr
+✅ VITE_API_URL=https://beta-test-metro.mabstudio.fr/api
+
+═══════════════════════════════════════════════════════════════
+  📚 DOCUMENTATION DISPONIBLE
+═══════════════════════════════════════════════════════════════
+
+Démarrage:
+  QUICK_START_MABSTUDIO.md         (5 min - ultra-rapide)
+  DEPLOIEMENT_MABSTUDIO.md         (45 min - complet)
+  CHECKLIST_MABSTUDIO.md           (liste de vérification)
+
+Généraux:
+  VPS_DEPLOYMENT_GUIDE.md          (guide technique complet)
+  SECRETS_GENERATION_GUIDE.md      (sécurité détaillée)
+  ENV_VARIABLES.md                 (référence variables)
+
+Audit:
+  AUDIT_BETA_TEST_RAPPORT.md       (rapport audit complet)
+  LIRE_AVANT_BETA_TEST.md          (résumé audit)
+
+═══════════════════════════════════════════════════════════════
+  ⚡ COMMANDES RAPIDES
+═══════════════════════════════════════════════════════════════
+
+# Sur votre machine locale
+./generate-secrets-mabstudio.sh
+
+# Sur votre VPS
+curl -fsSL https://get.docker.com | sh
+sudo apt install nginx certbot python3-certbot-nginx
+git clone [VOTRE_REPO] ~/apps/Metro
+cd ~/apps/Metro
+docker-compose build && docker-compose up -d
+sudo certbot --nginx -d beta-test-metro.mabstudio.fr
+
+═══════════════════════════════════════════════════════════════
+  ✅ APRÈS DÉPLOIEMENT
+═══════════════════════════════════════════════════════════════
+
+Application: https://beta-test-metro.mabstudio.fr
+API Health:  https://beta-test-metro.mabstudio.fr/api/health
+
+Login par défaut:
+  Email:    admin@metro.fr
+  Password: password123
+  
+⚠️  IMPORTANT: Changer ce mot de passe immédiatement !
+
+═══════════════════════════════════════════════════════════════
+  📞 AIDE
+═══════════════════════════════════════════════════════════════
+
+1. Lire: DEPLOIEMENT_MABSTUDIO.md (section correspondante)
+2. Logs: docker-compose logs -f
+3. Nginx: sudo tail -f /var/log/nginx/metro-error.log
+4. Guide dépannage: VPS_DEPLOYMENT_GUIDE.md (section 11)
+
+═══════════════════════════════════════════════════════════════
+  🎉 PRÊT À DÉPLOYER !
+═══════════════════════════════════════════════════════════════
+
+Prochaine étape: 
+→ Ouvrir QUICK_START_MABSTUDIO.md
+→ Suivre les 3 étapes
+→ Lancer le beta test !
+
+Bonne chance ! 🚀
+

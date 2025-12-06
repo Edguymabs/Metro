@@ -1,0 +1,531 @@
+// This is your Prisma schema file
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x", "darwin-arm64", "linux-musl"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  RESPONSABLE_METROLOGIE
+  TECHNICIEN
+  LECTURE_SEULE
+}
+
+enum InstrumentStatus {
+  CONFORME
+  NON_CONFORME
+  EN_MAINTENANCE
+  CASSE
+}
+
+enum InterventionType {
+  ETALONNAGE
+  VERIFICATION
+  MAINTENANCE
+  REPARATION
+}
+
+enum InterventionStatus {
+  PLANIFIEE
+  EN_COURS
+  TERMINEE
+  ANNULEE
+}
+
+enum ConformityResult {
+  CONFORME
+  NON_CONFORME
+  AVEC_RESERVES
+}
+
+enum MovementType {
+  ENLEVEMENT
+  RETOUR
+  TRANSFERT
+}
+
+enum FrequencyUnit {
+  DAYS
+  WEEKS
+  MONTHS
+  YEARS
+}
+
+enum RecurrenceType {
+  FIXED_INTERVAL
+  CALENDAR_DAILY
+  CALENDAR_WEEKLY
+  CALENDAR_MONTHLY
+  CALENDAR_YEARLY
+}
+
+enum DayOfWeek {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum ToleranceUnit {
+  DAYS
+  WEEKS
+  MONTHS
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  role      UserRole @default(LECTURE_SEULE)
+  active    Boolean  @default(true)
+  
+  // Préférences utilisateur
+  emailNotifications Boolean @default(true)
+  pushNotifications  Boolean @default(true)
+  darkMode           Boolean @default(false)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  interventionsCreated Intervention[]     @relation("CreatedBy")
+  movementsCreated     Movement[]         @relation("MovementCreatedBy")
+  notifications        Notification[]
+  actionsCreated       CorrectiveAction[] @relation("ActionCreatedBy")
+  actionsAssigned      CorrectiveAction[] @relation("ActionAssignedTo")
+  actionComments       ActionComment[]
+  auditLogs            AuditLog[]
+  maintenanceMessages  MaintenanceMessage[] @relation("MaintenanceMessageCreatedBy")
+  interventionConfigs  InterventionConfig[] @relation("InterventionConfigCreatedBy")
+
+  @@map("users")
+}
+
+model Site {
+  id          String   @id @default(uuid())
+  name        String
+  address     String?
+  city        String?
+  postalCode  String?
+  country     String   @default("France")
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  instruments Instrument[]
+
+  @@map("sites")
+}
+
+model InstrumentType {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  instruments         Instrument[]
+  calibrationMethods  CalibrationMethod[]
+
+  @@map("instrument_types")
+}
+
+model CalibrationMethod {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  
+  recurrenceType        RecurrenceType @default(FIXED_INTERVAL)
+  frequencyValue        Int?
+  frequencyUnit         FrequencyUnit?
+  daysOfWeek            DayOfWeek[]
+  dayOfMonth            Int?
+  monthOfYear           Int?
+  dayOfYear             Int?
+  
+  toleranceValue        Int            @default(0)
+  toleranceUnit         ToleranceUnit  @default(DAYS)
+  
+  procedure             String?
+  requiredEquipment     String?
+  estimatedDuration     Int?
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  instrumentTypeId String?
+  instrumentType   InstrumentType? @relation(fields: [instrumentTypeId], references: [id])
+  
+  calendars CalibrationCalendar[]
+
+  @@map("calibration_methods")
+}
+
+model CalibrationCalendar {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  
+  recurrenceType        RecurrenceType @default(FIXED_INTERVAL)
+  frequencyValue        Int?
+  frequencyUnit         FrequencyUnit?
+  daysOfWeek            DayOfWeek[]
+  dayOfMonth            Int?
+  monthOfYear           Int?
+  dayOfYear             Int?
+  
+  toleranceValue        Int            @default(0)
+  toleranceUnit         ToleranceUnit  @default(DAYS)
+  
+  active      Boolean  @default(true)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  calibrationMethodId String?
+  calibrationMethod   CalibrationMethod? @relation(fields: [calibrationMethodId], references: [id])
+  
+  instruments Instrument[]
+
+  @@map("calibration_calendars")
+}
+
+model Instrument {
+  id                   String           @id @default(uuid())
+  serialNumber         String           @unique
+  internalReference    String?
+  name                 String
+  brand                String?
+  model                String?
+  status                    InstrumentStatus @default(CONFORME)
+  calibrationPeriod         Int              @default(12) // DEPRECATED: en mois, gardé pour compatibilité
+  calibrationFrequencyValue Int              @default(12) // Nouvelle valeur de fréquence
+  calibrationFrequencyUnit  FrequencyUnit    @default(MONTHS) // Nouvelle unité de fréquence
+  
+  recurrenceType            RecurrenceType   @default(FIXED_INTERVAL)
+  daysOfWeek                DayOfWeek[]
+  dayOfMonth                Int?
+  monthOfYear               Int?
+  dayOfYear                 Int?
+  
+  toleranceValue            Int              @default(0)
+  toleranceUnit             ToleranceUnit    @default(DAYS)
+  
+  nextCalibrationDate       DateTime?
+  toleranceExpiryDate       DateTime?
+  location             String?
+  purchaseDate         DateTime?
+  purchasePrice        Float?
+  observations         String?
+  active               Boolean          @default(true)
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+
+  typeId String?
+  type   InstrumentType? @relation(fields: [typeId], references: [id])
+
+  siteId String?
+  site   Site?   @relation(fields: [siteId], references: [id])
+  
+  calibrationCalendarId String?
+  calibrationCalendar   CalibrationCalendar? @relation(fields: [calibrationCalendarId], references: [id])
+
+  interventions Intervention[]
+  documents     Document[]
+  movements     Movement[]
+
+  @@map("instruments")
+}
+
+model Supplier {
+  id               String   @id @default(uuid())
+  name             String
+  contactName      String?
+  email            String?
+  phone            String?
+  address          String?
+  city             String?
+  postalCode       String?
+  country          String   @default("France")
+  accreditations   String[] // Ex: ["COFRAC", "ISO 17025"]
+  accreditationDoc String?  // Lien vers document d'accréditation
+  active           Boolean  @default(true)
+  notes            String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  interventions Intervention[]
+
+  @@map("suppliers")
+}
+
+model Intervention {
+  id                 String             @id @default(uuid())
+  type               InterventionType
+  status             InterventionStatus @default(PLANIFIEE)
+  scheduledDate      DateTime
+  completedDate      DateTime?
+  conformityResult   ConformityResult?
+  cost               Float?
+  observations       String?
+  certificateNumber  String?
+  nextCalibrationDate DateTime?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  instrumentId String
+  instrument   Instrument @relation(fields: [instrumentId], references: [id], onDelete: Cascade)
+
+  supplierId String?
+  supplier   Supplier? @relation(fields: [supplierId], references: [id])
+
+  createdById String
+  createdBy   User   @relation("CreatedBy", fields: [createdById], references: [id])
+
+  documents Document[]
+  correctiveActions CorrectiveAction[]
+
+  @@map("interventions")
+}
+
+model Document {
+  id           String   @id @default(uuid())
+  filename     String
+  originalName String
+  mimeType     String
+  size         Int
+  path         String
+  description  String?
+  uploadedAt   DateTime @default(now())
+
+  instrumentId String?
+  instrument   Instrument? @relation(fields: [instrumentId], references: [id], onDelete: Cascade)
+
+  interventionId String?
+  intervention   Intervention? @relation(fields: [interventionId], references: [id], onDelete: Cascade)
+
+  @@map("documents")
+}
+
+model Movement {
+  id              String       @id @default(uuid())
+  type            MovementType
+  movementDate    DateTime
+  expectedReturn  DateTime?
+  actualReturn    DateTime?
+  deliveryNote    String?      // Numéro bon de livraison
+  receptionNote   String?      // Numéro bon de réception
+  destination     String?
+  observations    String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  instrumentId String
+  instrument   Instrument @relation(fields: [instrumentId], references: [id], onDelete: Cascade)
+
+  createdById String
+  createdBy   User   @relation("MovementCreatedBy", fields: [createdById], references: [id])
+
+  @@map("movements")
+}
+
+enum NotificationType {
+  CALIBRATION_DUE
+  CALIBRATION_OVERDUE
+  MOVEMENT_OVERDUE
+  NON_CONFORMITY
+  ACTION_ASSIGNED
+  ACTION_DUE
+  SYSTEM
+}
+
+enum NotificationPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+model Notification {
+  id          String               @id @default(uuid())
+  type        NotificationType
+  priority    NotificationPriority @default(MEDIUM)
+  title       String
+  message     String
+  read        Boolean              @default(false)
+  actionUrl   String?
+  metadata    Json?
+  createdAt   DateTime             @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+  @@index([userId, read])
+}
+
+enum ActionStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+  CANCELLED
+}
+
+enum ActionPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+model CorrectiveAction {
+  id          String         @id @default(uuid())
+  title       String
+  description String
+  status      ActionStatus   @default(OPEN)
+  priority    ActionPriority @default(MEDIUM)
+  dueDate     DateTime?
+  closedDate  DateTime?
+  rootCause   String?
+  solution    String?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  interventionId String?
+  intervention   Intervention? @relation(fields: [interventionId], references: [id])
+
+  createdById String
+  createdBy   User   @relation("ActionCreatedBy", fields: [createdById], references: [id])
+
+  assignedToId String?
+  assignedTo   User?   @relation("ActionAssignedTo", fields: [assignedToId], references: [id])
+
+  comments ActionComment[]
+
+  @@map("corrective_actions")
+}
+
+model ActionComment {
+  id        String   @id @default(uuid())
+  content   String
+  createdAt DateTime @default(now())
+
+  actionId String
+  action   CorrectiveAction @relation(fields: [actionId], references: [id], onDelete: Cascade)
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+
+  @@map("action_comments")
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  LOGIN
+  LOGOUT
+  EXPORT
+  IMPORT
+}
+
+model AuditLog {
+  id          String      @id @default(uuid())
+  action      AuditAction
+  entityType  String
+  entityId    String?
+  changes     Json?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime    @default(now())
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  @@map("audit_logs")
+  @@index([entityType, entityId])
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model MaintenanceMessage {
+  id          String   @id @default(uuid())
+  title       String
+  message     String
+  type        MaintenanceMessageType
+  priority    MaintenancePriority
+  targetAudience MaintenanceTargetAudience
+  isActive    Boolean  @default(true)
+  startDate   DateTime?
+  endDate     DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  createdById String
+  createdBy   User   @relation("MaintenanceMessageCreatedBy", fields: [createdById], references: [id])
+
+  @@index([isActive])
+  @@index([startDate])
+  @@index([endDate])
+  @@index([createdAt])
+}
+
+enum MaintenanceMessageType {
+  INFO
+  WARNING
+  ERROR
+  MAINTENANCE
+  UPDATE
+}
+
+enum MaintenancePriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum MaintenanceTargetAudience {
+  ALL
+  ADMIN
+  RESPONSABLE_METROLOGIE
+  TECHNICIEN
+}
+
+model InterventionConfig {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  isDefault   Boolean  @default(false)
+  isActive    Boolean  @default(true)
+  
+  // Configuration stockée en JSON
+  interventionTypes   Json     // MenuOption[]
+  statuses            Json     // MenuOption[]
+  conformityResults   Json     // MenuOption[]
+  conditionalFields   Json     // { showNextCalibrationDate: string[], ... }
+  validations         Json     // { requireSupplier: string[], ... }
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  createdById String
+  createdBy   User     @relation("InterventionConfigCreatedBy", fields: [createdById], references: [id])
+  
+  @@index([isActive])
+  @@index([isDefault])
+  @@index([createdAt])
+  @@map("intervention_configs")
+}
+

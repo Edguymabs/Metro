@@ -1,0 +1,86 @@
+services:
+  # Base de données PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: metro-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-metro}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-metro123}
+      POSTGRES_DB: ${POSTGRES_DB:-metro_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - metro-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U metro"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.simple
+      args:
+        - PRISMA_ENGINES_CHECKSUM_IGNORE_MISSING=1
+    container_name: metro-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: "postgresql://metro:metro123@postgres:5432/metro_db?schema=public"
+      JWT_SECRET: "CHANGEZ_CECI_EN_PRODUCTION_AVEC_UNE_CLE_SECRETE_FORTE"
+      FRONTEND_URL: "http://localhost:3000"
+      PORT: 5000
+      NODE_ENV: "production"
+      UPLOAD_DIR: "/app/uploads"
+      ENCRYPTION_KEY: "CHANGEZ_CECI_EN_PRODUCTION_AVEC_UNE_CLE_DE_CHIFFREMENT_FORTE"
+      BACKUP_DIR: "/app/backups"
+    ports:
+      - "5001:5000"
+    volumes:
+      - backend_uploads:/app/uploads
+      - backend_backups:/app/backups
+      - backend_logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - metro-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Frontend React
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: metro-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - metro-network
+
+volumes:
+  postgres_data:
+    driver: local
+  backend_uploads:
+    driver: local
+  backend_backups:
+    driver: local
+  backend_logs:
+    driver: local
+
+networks:
+  metro-network:
+    driver: bridge
+
