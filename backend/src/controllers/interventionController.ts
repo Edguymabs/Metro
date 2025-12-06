@@ -1,7 +1,7 @@
 import { Response, NextFunction } from 'express';
 import { AuthRequest } from '../middleware/auth';
 import prisma from '../config/database';
-import { cleanDateField, cleanNumberField, cleanStringField } from '../utils/dataTransformers';
+import { cleanDateField, cleanDateFieldForPrisma, cleanNumberField, cleanStringField } from '../utils/dataTransformers';
 
 export const getAllInterventions = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
@@ -201,13 +201,13 @@ export const updateIntervention = async (req: AuthRequest, res: Response, next: 
       data: {
         type,
         status,
-        scheduledDate: cleanDateField(scheduledDate),
-        completedDate: cleanDateField(completedDate),
+        scheduledDate: cleanDateFieldForPrisma(scheduledDate),
+        completedDate: cleanDateFieldForPrisma(completedDate),
         conformityResult: conformityResult || null,
         cost: cleanNumberField(cost),
         observations: cleanStringField(observations),
         certificateNumber: cleanStringField(certificateNumber),
-        nextCalibrationDate: cleanDateField(nextCalibrationDate),
+        nextCalibrationDate: cleanDateFieldForPrisma(nextCalibrationDate),
         supplierId: supplierId || null,
       },
       include: {

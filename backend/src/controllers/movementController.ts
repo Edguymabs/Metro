@@ -1,7 +1,7 @@
 import { Response, NextFunction } from 'express';
 import { AuthRequest } from '../middleware/auth';
 import prisma from '../config/database';
-import { cleanDateField, cleanStringField } from '../utils/dataTransformers';
+import { cleanDateField, cleanDateFieldForPrisma, cleanStringField } from '../utils/dataTransformers';
 
 export const getAllMovements = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
@@ -114,9 +114,9 @@ export const updateMovement = async (req: AuthRequest, res: Response, next: Next
       where: { id },
       data: {
         type,
-        movementDate: cleanDateField(movementDate),
-        expectedReturn: cleanDateField(expectedReturn),
-        actualReturn: cleanDateField(actualReturn),
+        movementDate: cleanDateFieldForPrisma(movementDate),
+        expectedReturn: cleanDateFieldForPrisma(expectedReturn),
+        actualReturn: cleanDateFieldForPrisma(actualReturn),
         deliveryNote: cleanStringField(deliveryNote),
         receptionNote: cleanStringField(receptionNote),
         destination: cleanStringField(destination),

@@ -69,7 +69,7 @@ export const createSite = async (req: AuthRequest, res: Response, next: NextFunc
     });
 
     const site = await prisma.site.create({
-      data: cleanedData,
+      data: cleanedData as any,
     });
 
     res.status(201).json(site);

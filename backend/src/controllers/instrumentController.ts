@@ -178,7 +178,7 @@ export const createInstrument = async (req: AuthRequest, res: Response, next: Ne
     });
 
     const instrument = await prisma.instrument.create({
-      data: cleanedData,
+      data: cleanedData as any,
       include: {
         type: true,
         site: true,
@@ -309,7 +309,7 @@ export const deleteInstrument = async (req: AuthRequest, res: Response, next: Ne
   }
 };
 
-export const getInstrumentStats = async (req: AuthRequest, res: Response) => {
+export const getInstrumentStats = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const totalInstruments = await prisma.instrument.count({ where: { active: true } });
 

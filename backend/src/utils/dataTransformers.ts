@@ -51,6 +51,14 @@ export const cleanDateField = (value: any): Date | null => {
 };
 
 /**
+ * Nettoie une date pour Prisma (convertit null en undefined)
+ */
+export const cleanDateFieldForPrisma = (value: any): Date | undefined => {
+  const cleaned = cleanDateField(value);
+  return cleaned ?? undefined;
+};
+
+/**
  * Valide et nettoie un UUID
  */
 export const cleanUUIDField = (value: any): string | null => {

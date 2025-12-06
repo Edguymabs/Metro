@@ -1,4 +1,5 @@
 import { Prisma } from '@prisma/client';
+import { PrismaClientKnownRequestError, PrismaClientValidationError, PrismaClientInitializationError } from '@prisma/client/runtime/library';
 
 interface PrismaErrorResult {
   statusCode: number;
@@ -7,7 +8,7 @@ interface PrismaErrorResult {
 
 export const parsePrismaError = (error: any): PrismaErrorResult => {
   // Erreurs Prisma Client
-  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+  if (error instanceof PrismaClientKnownRequestError) {
     switch (error.code) {
       case 'P2000':
         return {
@@ -142,7 +143,7 @@ export const parsePrismaError = (error: any): PrismaErrorResult => {
   }
 
   // Erreur de validation Prisma
-  if (error instanceof Prisma.PrismaClientValidationError) {
+  if (error instanceof PrismaClientValidationError) {
     return {
       statusCode: 400,
       message: 'Erreur de validation des données',
@@ -150,7 +151,7 @@ export const parsePrismaError = (error: any): PrismaErrorResult => {
   }
 
   // Erreur d'initialisation Prisma
-  if (error instanceof Prisma.PrismaClientInitializationError) {
+  if (error instanceof PrismaClientInitializationError) {
     return {
       statusCode: 503,
       message: 'Impossible de se connecter à la base de données',

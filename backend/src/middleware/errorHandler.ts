@@ -1,11 +1,12 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import { AppError } from '../types/errors';
 import { parsePrismaError } from '../utils/prismaErrorHandler';
 import { logger } from '../utils/logger';
+import { AuthRequest } from './auth';
 
 export const errorHandler = (
   err: Error | AppError,
-  req: Request,
+  req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {
