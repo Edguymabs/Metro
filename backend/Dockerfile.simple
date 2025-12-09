@@ -3,8 +3,8 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Installer OpenSSL, PostgreSQL client et les dépendances système
-RUN apk add --no-cache openssl openssl-dev ca-certificates postgresql-client
+# Installer OpenSSL, PostgreSQL client et les dépendances système (inclut curl pour le healthcheck)
+RUN apk add --no-cache openssl openssl-dev ca-certificates postgresql-client curl
 
 # Copier les fichiers de dépendances
 COPY package*.json ./

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { InterventionMenuConfig } from '../types/interventionConfig';
 
-const API_BASE_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:5001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 class InterventionConfigService {
   private baseUrl = `${API_BASE_URL}/intervention-configs`;
