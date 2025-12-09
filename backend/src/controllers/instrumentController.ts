@@ -120,21 +120,25 @@ export const createInstrument = async (req: AuthRequest, res: Response, next: Ne
       calibrationCalendarId,
     } = req.body ?? {};
 
-    // Validation basique
-    if (!serialNumber || !name || !typeId || !siteId) {
-      return res.status(400).json({ message: "Certains champs requis sont manquants" });
+    // Validation basique - seuls serialNumber et name sont requis
+    if (!serialNumber || !name) {
+      return res.status(400).json({ message: "Certains champs requis sont manquants (serialNumber, name)" });
     }
 
-    // Vérifier que le type d'instrument existe
-    const instrumentType = await prisma.instrumentType.findUnique({ where: { id: typeId } });
-    if (!instrumentType) {
-      return res.status(404).json({ message: "Type d'instrument non trouvé" });
+    // Vérifier que le type d'instrument existe (si fourni)
+    if (typeId) {
+      const instrumentType = await prisma.instrumentType.findUnique({ where: { id: typeId } });
+      if (!instrumentType) {
+        return res.status(404).json({ message: "Type d'instrument non trouvé" });
+      }
     }
 
-    // Vérifier que le site existe
-    const site = await prisma.site.findUnique({ where: { id: siteId } });
-    if (!site) {
-      return res.status(404).json({ message: 'Site non trouvé' });
+    // Vérifier que le site existe (si fourni)
+    if (siteId) {
+      const site = await prisma.site.findUnique({ where: { id: siteId } });
+      if (!site) {
+        return res.status(404).json({ message: 'Site non trouvé' });
+      }
     }
 
     // Vérifier si le numéro de série existe déjà
@@ -174,7 +178,8 @@ export const createInstrument = async (req: AuthRequest, res: Response, next: Ne
     }, {
       stringFields: ['internalReference', 'brand', 'model', 'location', 'observations'],
       dateFields: ['nextCalibrationDate', 'purchaseDate'],
-      numberFields: ['purchasePrice']
+      numberFields: ['purchasePrice'],
+      uuidFields: ['typeId', 'siteId', 'calibrationCalendarId']
     });
 
     const instrument = await prisma.instrument.create({

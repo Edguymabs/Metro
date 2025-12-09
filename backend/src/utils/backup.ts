@@ -129,8 +129,20 @@ class SecureBackupManager {
       }
 
       // Restaurer la base de données
-      const command = `psql "${this.config.databaseUrl}" < "${actualFilepath}"`;
-      await execAsync(command);
+      // Extraire les informations de connexion depuis DATABASE_URL (sans ?schema=public)
+      const urlMatch = this.config.databaseUrl.match(/postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/([^?]+)/);
+      
+      if (!urlMatch) {
+        throw new Error('Format DATABASE_URL invalide');
+      }
+
+      const [, dbUser, dbPassword, dbHost, dbPort, dbName] = urlMatch;
+      
+      // Utiliser psql avec PGPASSWORD pour éviter l'exposition du mot de passe
+      const command = `PGPASSWORD="${dbPassword}" psql -h ${dbHost} -p ${dbPort} -U ${dbUser} -d ${dbName} < "${actualFilepath}"`;
+      await execAsync(command, {
+        env: { ...process.env, PGPASSWORD: dbPassword }
+      });
 
       // Nettoyer les fichiers temporaires
       if (isEncrypted || isCompressed) {

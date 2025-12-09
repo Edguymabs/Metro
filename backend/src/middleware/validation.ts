@@ -61,11 +61,11 @@ export const schemas = {
   instrument: Joi.object({
     name: Joi.string().min(1).max(100).required(),
     serialNumber: Joi.string().min(1).max(50).required(),
-    internalReference: Joi.string().max(50).optional().allow(''),
-    brand: Joi.string().max(50).optional().allow(''),
-    model: Joi.string().max(50).optional().allow(''),
-    typeId: Joi.string().uuid().required(),
-    siteId: Joi.string().uuid().required(),
+    internalReference: Joi.string().max(50).optional().allow('', null),
+    brand: Joi.string().max(50).optional().allow('', null),
+    model: Joi.string().max(50).optional().allow('', null),
+    typeId: Joi.string().uuid().optional().allow(null, ''),
+    siteId: Joi.string().uuid().optional().allow(null, ''),
     status: Joi.string().valid('CONFORME', 'NON_CONFORME', 'EN_MAINTENANCE', 'CASSE').optional(),
     location: Joi.string().max(100).optional().allow('', null),
     purchaseDate: Joi.alternatives().try(

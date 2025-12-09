@@ -21,7 +21,18 @@ export const extractErrorDetails = (error: any): { message: string; details?: st
 
   // Si c'est une erreur de validation avec un tableau d'erreurs
   if (data?.errors && Array.isArray(data.errors)) {
-    details = data.errors;
+    // Convertir les objets {field, message} en strings
+    details = data.errors.map((err: any) => {
+      if (typeof err === 'string') {
+        return err;
+      } else if (err && typeof err === 'object' && err.field && err.message) {
+        return `${err.field}: ${err.message}`;
+      } else if (err && typeof err === 'object' && err.message) {
+        return err.message;
+      } else {
+        return JSON.stringify(err);
+      }
+    });
     if (!message.includes('validation') && !message.includes('invalide')) {
       message = 'Données invalides';
     }
