@@ -1,0 +1,43 @@
+═══════════════════════════════════════════════════════════════════
+                🚀 CORRECTION COMPLÈTE VPS
+═══════════════════════════════════════════════════════════════════
+
+📋 COPIEZ-COLLEZ CETTE LIGNE UNIQUE sur le VPS:
+
+cd ~/apps/Metro && git stash && git pull && docker-compose exec -T backend mkdir -p /app/backups && docker-compose exec -T backend chmod 755 /app/backups && docker-compose build --no-cache backend && docker-compose up -d && sleep 15 && echo "✅ TOUT CORRIGÉ!"
+
+────────────────────────────────────────────────────────────────────
+
+✅ Cette commande corrige:
+   1. Validation instruments (typeId/siteId optionnels)
+   2. Système de sauvegarde SQL
+   3. Dossier backups manquant
+   4. Rebuild backend avec nouvelles corrections
+
+⏱️  Durée: 3-4 minutes
+
+🧪 APRÈS:
+   1. Test validation: https://beta-test-metro.mabstudio.fr
+      → Instruments → Nouveau
+      → Numéro: TEST-OK / Nom: Test
+      → Type et Site VIDES → Créer ✅
+
+   2. Test backup: https://beta-test-metro.mabstudio.fr
+      → Paramètres → Sauvegardes
+      → Créer une sauvegarde ✅
+
+═══════════════════════════════════════════════════════════════════
+
+🔍 SI PROBLÈME:
+
+# Logs backend
+docker-compose logs backend --tail=50
+
+# État des services
+docker-compose ps
+
+# Restart complet
+docker-compose restart
+
+═══════════════════════════════════════════════════════════════════
+
