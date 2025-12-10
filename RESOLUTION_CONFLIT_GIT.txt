@@ -1,0 +1,68 @@
+═══════════════════════════════════════════════════════════════════
+🔧 RÉSOLUTION CONFLIT GIT - À EXÉCUTER SUR LE VPS
+═══════════════════════════════════════════════════════════════════
+
+❌ ERREUR ACTUELLE:
+   "Your local changes would be overwritten by merge"
+
+✅ SOLUTION (copiez-collez sur le VPS):
+
+cd ~/apps/Metro && \
+git stash push -m "Auto-stash $(date +%Y%m%d-%H%M%S)" && \
+rm -f fix-blank-page-simple.sh fix-blank-page-vps.sh fix-vps-now.sh && \
+git pull origin main && \
+echo "✅ Code mis à jour!" && \
+docker-compose build --no-cache backend && \
+docker-compose up -d backend && \
+sleep 15 && \
+docker-compose ps && \
+echo "" && \
+echo "✅ TERMINÉ! Testez sur https://beta-test-metro.mabstudio.fr"
+
+═══════════════════════════════════════════════════════════════════
+
+📝 EXPLICATION:
+
+1. git stash        → Sauvegarde modifications locales
+2. rm -f ...        → Supprime fichiers temporaires
+3. git pull         → Récupère le nouveau code
+4. docker-compose   → Rebuild et redémarre backend
+5. sleep 15         → Attend le démarrage
+6. docker-compose ps → Vérifie l'état
+
+═══════════════════════════════════════════════════════════════════
+
+🧪 APRÈS MISE À JOUR:
+
+1. Ouvrir: https://beta-test-metro.mabstudio.fr
+2. Connexion
+3. Instruments → Nouveau
+4. Remplir SEULEMENT:
+   • Numéro de série: TEST-FINAL
+   • Nom: Test Correction Finale
+5. Laisser Type et Site VIDES
+6. Créer → ✅ DEVRAIT FONCTIONNER
+
+═══════════════════════════════════════════════════════════════════
+
+🔍 SI PROBLÈME PERSISTE:
+
+# Voir logs détaillés:
+docker-compose logs backend --tail=50
+
+# Vérifier les corrections:
+docker-compose exec backend grep "typeId:" src/middleware/validation.ts | head -2
+
+# État des conteneurs:
+docker-compose ps
+
+# Redémarrage complet:
+docker-compose restart backend
+
+═══════════════════════════════════════════════════════════════════
+
+⚠️  NOTE: Le "stash" sauvegarde vos modifications locales.
+    Pour les récupérer plus tard: git stash pop
+
+═══════════════════════════════════════════════════════════════════
+
