@@ -1,0 +1,143 @@
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║     🔧 FIX RESTAURATION SQL - COMMANDES NON-STANDARD            ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+PROBLÈME IDENTIFIÉ
+------------------
+Votre backup SQL contient des commandes NON-STANDARD :
+- \restrict GVpaPS3QsQoG5QS9tNpdMNSed2ufre3QKQ6qfbQBXiUXAOkg3Elz3dHuFvnfd2a
+- \unrestrict GVpaPS3QsQoG5QS9tNpdMNSed2ufre3QKQ6qfbQBXiUXAOkg3Elz3dHuFvnfd2a
+
+Ces commandes ne sont PAS reconnues par PostgreSQL standard.
+Elles viennent probablement d'un outil de chiffrement externe.
+
+═══════════════════════════════════════════════════════════════════
+
+SOLUTION 1 : CODE CORRIGÉ (AUTOMATIQUE)
+---------------------------------------
+
+Le code backend a été modifié pour nettoyer automatiquement ces
+commandes lors de la restauration.
+
+ÉTAPES :
+1. Sur le VPS, pull le code corrigé :
+   cd ~/apps/Metro && git pull origin main
+
+2. Rebuild backend :
+   docker-compose build --no-cache backend
+   docker-compose restart backend
+
+3. Essayer de restaurer depuis le frontend :
+   Mon compte → Sauvegardes → Restaurer un backup
+
+✅ Le système va automatiquement supprimer les lignes problématiques
+
+═══════════════════════════════════════════════════════════════════
+
+SOLUTION 2 : NETTOYAGE MANUEL (SI SOLUTION 1 ÉCHOUE)
+----------------------------------------------------
+
+A. Avec le script bash :
+
+bash clean-sql-backup.sh "/Users/mabs/Downloads/Metro Backup Dec 10 2025.sql"
+
+Cela va créer : "Metro Backup Dec 10 2025_cleaned.sql"
+
+B. Ou avec Node.js :
+
+node fix-backup-restore.js "/Users/mabs/Downloads/Metro Backup Dec 10 2025.sql"
+
+Cela va créer : "Metro Backup Dec 10 2025_cleaned.sql"
+
+C. Puis restaurer le fichier nettoyé :
+
+# Copier le fichier nettoyé sur le VPS
+scp "Metro Backup Dec 10 2025_cleaned.sql" root@vps:~/
+
+# Sur le VPS
+docker exec -i metro-postgres psql -U metro -d metro_db < ~/Metro\ Backup\ Dec\ 10\ 2025_cleaned.sql
+
+═══════════════════════════════════════════════════════════════════
+
+SOLUTION 3 : COMMANDE ONE-LINER (RAPIDE)
+-----------------------------------------
+
+Sur votre Mac (où est le fichier SQL) :
+
+grep -v '^\\(un\)\?restrict' "/Users/mabs/Downloads/Metro Backup Dec 10 2025.sql" > "/Users/mabs/Downloads/Metro_Backup_CLEAN.sql"
+
+Puis upload et restore sur VPS.
+
+═══════════════════════════════════════════════════════════════════
+
+VÉRIFICATION APRÈS FIX
+----------------------
+
+1. Nombre de lignes :
+   - Original : 1245 lignes
+   - Nettoyé : 1243 lignes (2 lignes supprimées)
+
+2. Les 2 lignes supprimées sont :
+   - Ligne 5 : \restrict ...
+   - Ligne 1244 : \unrestrict ...
+
+3. Test restauration :
+   docker-compose logs backend --tail=50 | grep -i "restaur"
+   
+   ✅ Devrait afficher : "Backup restauré avec succès"
+   ❌ Si erreur, partager les logs
+
+═══════════════════════════════════════════════════════════════════
+
+POURQUOI CES COMMANDES ?
+-------------------------
+
+Ces commandes \restrict/\unrestrict viennent probablement de :
+- Un outil de backup Hostinger personnalisé
+- Une extension PostgreSQL tierce
+- Un système de chiffrement/sécurité ajouté
+
+PostgreSQL standard ne les reconnaît pas → Erreur restauration
+
+═══════════════════════════════════════════════════════════════════
+
+PROCHAINE FOIS
+--------------
+
+Pour éviter ce problème à l'avenir :
+
+1. Créer backups depuis le frontend Metro :
+   Mon compte → Sauvegardes → Créer backup
+   
+   ✅ Ces backups seront propres (pg_dump standard)
+
+2. Ou utiliser pg_dump direct :
+   docker exec metro-postgres pg_dump -U metro metro_db > backup.sql
+   
+   ✅ Pas de commandes non-standard
+
+═══════════════════════════════════════════════════════════════════
+
+COMMIT CORRIGÉ
+--------------
+
+Commit: 40b3fe5
+Date: 10 décembre 2025
+Fichiers modifiés:
+- backend/src/utils/backup.ts (nettoyage auto)
+- clean-sql-backup.sh (nettoyage manuel)
+- fix-backup-restore.js (nettoyage manuel Node)
+
+═══════════════════════════════════════════════════════════════════
+
+TESTEZ MAINTENANT
+-----------------
+
+cd ~/apps/Metro && git pull origin main && docker-compose build --no-cache backend && docker-compose restart backend
+
+Puis essayer de restaurer depuis le frontend !
+
+═══════════════════════════════════════════════════════════════════
+
