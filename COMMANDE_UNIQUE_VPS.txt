@@ -1,0 +1,75 @@
+╔══════════════════════════════════════════════════════════════════╗
+║                                                                  ║
+║     🚀 COMMANDE UNIQUE POUR VPS - PLAN DE GUERRE METRO          ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
+
+📋 PRÉREQUIS
+- Connexion SSH ou terminal hPanel sur le VPS
+- Accès à ~/apps/Metro
+
+═══════════════════════════════════════════════════════════════════
+
+🎯 COMMANDE RAPIDE (10-15 min)
+
+cd ~/apps/Metro && git pull origin main && chmod +x plan-guerre-*.sh && bash plan-guerre-rapide.sh
+
+═══════════════════════════════════════════════════════════════════
+
+🔍 COMMANDE COMPLÈTE AVEC TESTS (40-60 min)
+
+cd ~/apps/Metro && git pull origin main && chmod +x plan-guerre-*.sh && bash plan-guerre-master.sh
+
+═══════════════════════════════════════════════════════════════════
+
+📊 VÉRIFICATION APRÈS EXÉCUTION
+
+1. Vérifier conteneurs:
+   docker-compose ps
+   # Devrait afficher 3 conteneurs Up
+
+2. Tester API:
+   curl http://localhost:5001/api/health
+   # Devrait retourner {"status":"OK",...}
+
+3. Tester site:
+   https://beta-test-metro.mabstudio.fr
+   # Devrait afficher le login
+
+═══════════════════════════════════════════════════════════════════
+
+✅ TESTS MANUELS CRITIQUES
+
+1. VALIDATION INSTRUMENTS (sans type/site):
+   - Aller sur le site
+   - Login: admin@metro.fr / password123
+   - Instruments → Nouveau
+   - Remplir seulement: numéro série + nom
+   - Laisser Type et Site VIDES
+   - Cliquer Créer
+   ✅ ATTENDU: Instrument créé sans erreur 400
+
+2. BACKUP SQL:
+   - Mon compte → Sauvegardes
+   - Cliquer "Créer backup"
+   ✅ ATTENDU: Backup créé et visible dans la liste
+
+═══════════════════════════════════════════════════════════════════
+
+❌ EN CAS D'ÉCHEC - ROLLBACK
+
+cd ~/apps/Metro && git reset --hard 63e9bd3 && docker-compose down && docker-compose build --no-cache && docker-compose up -d
+
+═══════════════════════════════════════════════════════════════════
+
+📖 DOCUMENTATION COMPLÈTE
+
+- PLAN_GUERRE_README.md - Guide utilisateur complet
+- INSTRUCTIONS_PLAN_GUERRE.md - Instructions détaillées
+- METRO_REPORTS.md - Rapport technique (Problème 7)
+
+═══════════════════════════════════════════════════════════════════
+
+Commit: 21f2583
+Date: 10 décembre 2025
+
