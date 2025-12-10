@@ -131,6 +131,19 @@ class SecureBackupManager {
         actualFilepath = decompressedFilepath;
       }
 
+      // Nettoyer le fichier SQL (supprimer commandes non-standard \restrict et \unrestrict)
+      logger.info('Nettoyage du fichier SQL avant restauration...');
+      const cleanedFilepath = actualFilepath.replace('.sql', '_cleaned.sql');
+      const sqlContent = fs.readFileSync(actualFilepath, 'utf8');
+      const lines = sqlContent.split('\n');
+      const cleanedLines = lines.filter(line => !line.match(/^\\(un)?restrict\s/));
+      fs.writeFileSync(cleanedFilepath, cleanedLines.join('\n'), 'utf8');
+      
+      const removedLines = lines.length - cleanedLines.length;
+      if (removedLines > 0) {
+        logger.info(`Lignes non-standard supprimées: ${removedLines} (\\restrict/\\unrestrict)`);
+      }
+
       // Restaurer la base de données
       // Extraire les informations de connexion depuis DATABASE_URL (sans ?schema=public)
       // Retirer les query params (?schema=public) qui causent des problèmes avec psql
@@ -143,11 +156,16 @@ class SecureBackupManager {
 
       const [, dbUser, dbPassword, dbHost, dbPort, dbName] = urlMatch;
       
-      // Utiliser psql avec PGPASSWORD pour éviter l'exposition du mot de passe
-      const command = `PGPASSWORD="${dbPassword}" psql -h ${dbHost} -p ${dbPort} -U ${dbUser} -d ${dbName} < "${actualFilepath}"`;
+      // Utiliser psql avec le fichier nettoyé et PGPASSWORD pour éviter l'exposition du mot de passe
+      const command = `PGPASSWORD="${dbPassword}" psql -h ${dbHost} -p ${dbPort} -U ${dbUser} -d ${dbName} < "${cleanedFilepath}"`;
       await execAsync(command, {
         env: { ...process.env, PGPASSWORD: dbPassword }
       });
+      
+      // Nettoyer le fichier temporaire
+      if (fs.existsSync(cleanedFilepath)) {
+        fs.unlinkSync(cleanedFilepath);
+      }
 
       // Nettoyer les fichiers temporaires
       if (isEncrypted || isCompressed) {
