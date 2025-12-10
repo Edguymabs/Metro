@@ -184,3 +184,4 @@ docker-compose up -d
 
 Ces fichiers doivent être synchronisés sur le VPS (via Git ou copie manuelle) puis le frontend doit être rebuildé.
 
+

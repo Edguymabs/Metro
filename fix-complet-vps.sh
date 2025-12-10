@@ -184,3 +184,4 @@ echo "   3. Si problème persiste, vérifiez les logs:"
 echo "      docker-compose logs -f frontend backend"
 echo ""
 
+

@@ -139,3 +139,4 @@ Si la page est toujours blanche :
 - En production, l'URL `/api` est correcte car Nginx proxy vers `metro-backend:5000`
 - Le healthcheck backend utilise `curl` qui doit être installé dans l'image Docker
 
+

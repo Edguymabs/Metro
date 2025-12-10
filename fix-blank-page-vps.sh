@@ -142,3 +142,4 @@ echo "   2. Ouvrez la console du navigateur (F12) pour voir les erreurs éventue
 echo "   3. Vérifiez les logs: docker-compose logs -f frontend backend"
 echo ""
 
+

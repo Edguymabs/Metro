@@ -1,0 +1,50 @@
+═══════════════════════════════════════════════════════════════════
+🚀 CORRECTION RAPIDE VALIDATION INSTRUMENTS - À COPIER SUR LE VPS
+═══════════════════════════════════════════════════════════════════
+
+📋 ÉTAPE 1: Connectez-vous au VPS via hPanel Terminal
+
+📋 ÉTAPE 2: Copiez-collez TOUT CE BLOC (Ctrl+C puis Ctrl+Shift+V) :
+
+cd ~/apps/Metro && \
+docker-compose exec -T backend sed -i 's/typeId: Joi.string().uuid().required()/typeId: Joi.string().uuid().optional().allow(null, '\'''\'')/g' src/middleware/validation.ts && \
+docker-compose exec -T backend sed -i 's/siteId: Joi.string().uuid().required()/siteId: Joi.string().uuid().optional().allow(null, '\'''\'')/g' src/middleware/validation.ts && \
+docker-compose exec -T backend sed -i "s/brand: Joi.string().max(50).optional().allow('')/brand: Joi.string().max(50).optional().allow('', null)/g" src/middleware/validation.ts && \
+docker-compose exec -T backend sed -i "s/model: Joi.string().max(50).optional().allow('')/model: Joi.string().max(50).optional().allow('', null)/g" src/middleware/validation.ts && \
+docker-compose exec -T backend sed -i 's/if (!serialNumber || !name || !typeId || !siteId)/if (!serialNumber || !name)/g' src/controllers/instrumentController.ts && \
+echo "✅ Corrections appliquées, rebuild en cours..." && \
+docker-compose build --no-cache backend && \
+docker-compose up -d backend && \
+sleep 15 && \
+echo "✅ TERMINÉ! Testez maintenant sur https://beta-test-metro.mabstudio.fr"
+
+═══════════════════════════════════════════════════════════════════
+
+⏱️  Durée estimée: 2-3 minutes
+
+🧪 APRÈS CORRECTION:
+   1. Allez sur https://beta-test-metro.mabstudio.fr
+   2. Connectez-vous
+   3. Créez un nouvel instrument avec SEULEMENT:
+      - Numéro de série: TEST-001
+      - Nom: Instrument Test
+   4. Laissez Type et Site VIDES
+   5. Cliquez "Créer"
+   
+   ✅ Devrait fonctionner maintenant!
+
+═══════════════════════════════════════════════════════════════════
+
+🔍 EN CAS DE PROBLÈME:
+
+# Voir les logs:
+docker-compose logs backend --tail=50
+
+# Vérifier l'état:
+docker-compose ps
+
+# Redémarrage complet:
+docker-compose restart backend
+
+═══════════════════════════════════════════════════════════════════
+
