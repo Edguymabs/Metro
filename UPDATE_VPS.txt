@@ -1,0 +1,44 @@
+═══════════════════════════════════════════════════════════════════
+✅ CODE POUSSÉ SUR GITHUB - MAINTENANT SUR LE VPS
+═══════════════════════════════════════════════════════════════════
+
+📋 Connectez-vous au VPS (hPanel Terminal) et exécutez:
+
+cd ~/apps/Metro && \
+git pull && \
+echo "✅ Code mis à jour!" && \
+docker-compose build --no-cache backend && \
+echo "✅ Backend rebuilé!" && \
+docker-compose up -d backend && \
+echo "⏳ Attente 15s..." && \
+sleep 15 && \
+docker-compose logs backend --tail=20 && \
+echo "" && \
+echo "✅ TERMINÉ! Testez sur https://beta-test-metro.mabstudio.fr"
+
+═══════════════════════════════════════════════════════════════════
+
+🧪 TEST:
+   1. https://beta-test-metro.mabstudio.fr
+   2. Instruments → Nouveau
+   3. Remplir SEULEMENT:
+      - Numéro de série: TEST-FIX
+      - Nom: Test Validation Fixed
+   4. Laisser Type et Site vides
+   5. Créer → ✅ DEVRAIT FONCTIONNER
+
+═══════════════════════════════════════════════════════════════════
+
+📝 CORRECTIONS APPLIQUÉES:
+
+✅ backend/src/middleware/validation.ts
+   - typeId: optional().allow(null, '')
+   - siteId: optional().allow(null, '')
+   - brand/model: allow('', null)
+
+✅ backend/src/controllers/instrumentController.ts
+   - Validation: seulement serialNumber + name requis
+   - uuidFields ajouté pour nettoyer typeId/siteId/calibrationCalendarId
+
+═══════════════════════════════════════════════════════════════════
+

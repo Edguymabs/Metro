@@ -3,6 +3,7 @@ import path from 'path';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import { encrypt, decrypt } from './encryption';
+import { logger } from './logger';
 import ExcelJS from 'exceljs';
 import { createObjectCsvWriter } from 'csv-writer';
 
@@ -43,7 +44,9 @@ class SecureBackupManager {
 
       // Extraire les informations de connexion depuis DATABASE_URL
       // Format: postgresql://user:password@host:port/database?schema=public
-      const urlMatch = this.config.databaseUrl.match(/postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/([^?]+)/);
+      // Retirer les query params (?schema=public) qui causent des problèmes avec pg_dump
+      const cleanUrl = this.config.databaseUrl.split('?')[0];
+      const urlMatch = cleanUrl.match(/postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/([^?]+)/);
       
       if (!urlMatch) {
         throw new Error('Format DATABASE_URL invalide');
@@ -54,7 +57,7 @@ class SecureBackupManager {
       // Utiliser pg_dump avec PGPASSWORD pour éviter l'exposition du mot de passe dans la commande
       const command = `PGPASSWORD="${dbPassword}" pg_dump -h ${dbHost} -p ${dbPort} -U ${dbUser} -d ${dbName} -F p -f "${filepath}"`;
       
-      console.log('🔄 Création du backup...');
+      logger.info('Création du backup...');
       await execAsync(command, {
         env: { ...process.env, PGPASSWORD: dbPassword }
       });
@@ -65,7 +68,7 @@ class SecureBackupManager {
         const compressedFilepath = filepath + '.gz';
         await execAsync(`gzip "${filepath}"`);
         finalFilepath = compressedFilepath;
-        console.log('📦 Backup compressé');
+        logger.info('Backup compressé');
       }
 
       // Chiffrer si activé
@@ -77,17 +80,17 @@ class SecureBackupManager {
         fs.writeFileSync(encryptedFilepath, JSON.stringify(encrypted));
         fs.unlinkSync(finalFilepath); // Supprimer le fichier non chiffré
         finalFilepath = encryptedFilepath;
-        console.log('🔐 Backup chiffré');
+        logger.info('Backup chiffré');
       }
 
       // Nettoyer les anciens backups
       await this.cleanupOldBackups();
 
-      console.log('✅ Backup créé avec succès:', finalFilepath);
+      logger.info('Backup créé avec succès', { filename: path.basename(finalFilepath) });
       return { success: true, filename: path.basename(finalFilepath) };
 
     } catch (error) {
-      console.error('❌ Erreur lors de la création du backup:', error);
+      logger.error('Erreur lors de la création du backup', { error });
       return { success: false, error: error instanceof Error ? error.message : 'Erreur inconnue' };
     }
   }
@@ -130,7 +133,9 @@ class SecureBackupManager {
 
       // Restaurer la base de données
       // Extraire les informations de connexion depuis DATABASE_URL (sans ?schema=public)
-      const urlMatch = this.config.databaseUrl.match(/postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/([^?]+)/);
+      // Retirer les query params (?schema=public) qui causent des problèmes avec psql
+      const cleanUrl = this.config.databaseUrl.split('?')[0];
+      const urlMatch = cleanUrl.match(/postgresql:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/([^?]+)/);
       
       if (!urlMatch) {
         throw new Error('Format DATABASE_URL invalide');
@@ -149,11 +154,11 @@ class SecureBackupManager {
         fs.unlinkSync(actualFilepath);
       }
 
-      console.log('✅ Backup restauré avec succès');
+      logger.info('Backup restauré avec succès');
       return { success: true };
 
     } catch (error) {
-      console.error('❌ Erreur lors de la restauration:', error);
+      logger.error('Erreur lors de la restauration', { error });
       return { success: false, error: error instanceof Error ? error.message : 'Erreur inconnue' };
     }
   }
@@ -194,7 +199,7 @@ class SecureBackupManager {
       if (backup.created < cutoffDate) {
         const filepath = path.join(this.config.backupDir, backup.filename);
         fs.unlinkSync(filepath);
-        console.log('🗑️ Backup supprimé:', backup.filename);
+        logger.info('Backup supprimé', { filename: backup.filename });
       }
     }
   }
@@ -232,16 +237,16 @@ class SecureBackupManager {
     const intervalMs = intervalHours * 60 * 60 * 1000;
     
     setInterval(async () => {
-      console.log('🔄 Backup automatique démarré...');
+      logger.info('Backup automatique démarré...');
       const result = await this.createFullBackup();
       if (result.success) {
-        console.log('✅ Backup automatique terminé:', result.filename);
+        logger.info('Backup automatique terminé', { filename: result.filename });
       } else {
-        console.error('❌ Échec du backup automatique:', result.error);
+        logger.error('Échec du backup automatique', { error: result.error });
       }
     }, intervalMs);
 
-    console.log(`📅 Backups automatiques programmés toutes les ${intervalHours}h`);
+    logger.info(`Backups automatiques programmés toutes les ${intervalHours}h`);
   }
 
   // Export vers Excel
@@ -283,11 +288,11 @@ class SecureBackupManager {
 
       await workbook.xlsx.writeFile(filepath);
 
-      console.log('✅ Export Excel créé:', filename);
+      logger.info('Export Excel créé', { filename });
       return { success: true, filename };
 
     } catch (error) {
-      console.error('❌ Erreur lors de l\'export Excel:', error);
+      logger.error('Erreur lors de l\'export Excel', { error });
       return { success: false, error: error instanceof Error ? error.message : 'Erreur inconnue' };
     }
   }
@@ -313,11 +318,11 @@ class SecureBackupManager {
 
       await csvWriter.writeRecords(data);
 
-      console.log('✅ Export CSV créé:', filename);
+      logger.info('Export CSV créé', { filename });
       return { success: true, filename };
 
     } catch (error) {
-      console.error('❌ Erreur lors de l\'export CSV:', error);
+      logger.error('Erreur lors de l\'export CSV', { error });
       return { success: false, error: error instanceof Error ? error.message : 'Erreur inconnue' };
     }
   }
@@ -336,11 +341,11 @@ class SecureBackupManager {
       const jsonContent = JSON.stringify(data, null, 2);
       fs.writeFileSync(filepath, jsonContent, 'utf8');
 
-      console.log('✅ Export JSON créé:', filename);
+      logger.info('Export JSON créé', { filename });
       return { success: true, filename };
 
     } catch (error) {
-      console.error('❌ Erreur lors de l\'export JSON:', error);
+      logger.error('Erreur lors de l\'export JSON', { error });
       return { success: false, error: error instanceof Error ? error.message : 'Erreur inconnue' };
     }
   }
@@ -379,7 +384,7 @@ class SecureBackupManager {
         }
 
         await workbook.xlsx.writeFile(filepath);
-        console.log('✅ Export complet Excel créé:', filename);
+        logger.info('Export complet Excel créé', { filename });
         return { success: true, filename };
 
       } else {
@@ -418,12 +423,12 @@ class SecureBackupManager {
         // Supprimer le dossier temporaire
         await execAsync(`rm -rf "${folderPath}"`);
 
-        console.log('✅ Export complet créé:', zipFilename);
+        logger.info('Export complet créé', { filename: zipFilename });
         return { success: true, filename: zipFilename };
       }
 
     } catch (error) {
-      console.error('❌ Erreur lors de l\'export complet:', error);
+      logger.error('Erreur lors de l\'export complet', { error });
       return { success: false, error: error instanceof Error ? error.message : 'Erreur inconnue' };
     }
   }
@@ -438,11 +443,11 @@ class SecureBackupManager {
       }
 
       fs.unlinkSync(filepath);
-      console.log('🗑️ Backup supprimé:', filename);
+      logger.info('Backup supprimé', { filename });
       return { success: true };
 
     } catch (error) {
-      console.error('❌ Erreur lors de la suppression:', error);
+      logger.error('Erreur lors de la suppression', { error });
       return { success: false, error: error instanceof Error ? error.message : 'Erreur inconnue' };
     }
   }
