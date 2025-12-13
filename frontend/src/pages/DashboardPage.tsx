@@ -37,11 +37,13 @@ const DashboardPage: React.FC = () => {
   }
 
   // Palette de gris pour les graphiques (avec primary pour accent)
-  const COLORS = ['#52525b', '#71717a', '#a1a1aa', '#3f3f46', '#27272a', '#fecb00'];
+  const COLORS = ['#52525b', '#71717a', '#a1a1aa', '#3f3f46', '#27272a', '#d4d4d8'];
+  const PRIMARY_COLOR = '#fecb00'; // Jaune pour éléments importants
 
   const statusData = instrumentStats?.instrumentsByStatus.map(item => ({
     name: translateStatus(item.status),
     value: item._count,
+    status: item.status, // Garder le statut original pour le mapping couleur
   })) || [];
 
   const interventionTypeData = interventionStats?.interventionsByType.map(item => ({
@@ -155,9 +157,12 @@ const DashboardPage: React.FC = () => {
                 fill="#8884d8"
                 dataKey="value"
               >
-                {statusData.map((_entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
+                {statusData.map((entry, index) => {
+                  // "Conforme" et autres statuts positifs en jaune (primary)
+                  const isPositive = entry.status === 'CONFORME' || entry.status === 'PLANIFIEE';
+                  const fillColor = isPositive ? PRIMARY_COLOR : COLORS[index % COLORS.length];
+                  return <Cell key={`cell-${index}`} fill={fillColor} />;
+                })}
               </Pie>
               <Tooltip
                 contentStyle={{ borderRadius: '0px', border: '1px solid #e4e4e7', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', backgroundColor: '#ffffff' }}
