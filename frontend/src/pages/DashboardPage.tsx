@@ -183,7 +183,7 @@ const DashboardPage: React.FC = () => {
                 contentStyle={{ borderRadius: '0px', border: '1px solid #e4e4e7', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', backgroundColor: '#ffffff' }}
               />
               <Legend />
-              <Bar dataKey="value" fill="#52525b" name="Nombre" radius={[0, 0, 0, 0]} barSize={40} />
+              <Bar dataKey="value" fill="#fecb00" name="Nombre" radius={[0, 0, 0, 0]} barSize={40} />
             </BarChart>
           </ResponsiveContainer>
         </div>

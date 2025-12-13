@@ -213,7 +213,7 @@ const InterventionConfigPage: React.FC = () => {
               <div className="flex gap-2 pt-4 border-t border-gray-200">
                 <Link
                   to={`/parametres/interventions/${config.id}`}
-                  className="flex-1 text-center px-3 py-2 text-sm font-medium text-primary-600 hover:text-primary-900 hover:bg-primary-50 rounded-lg transition-colors"
+                  className="flex-1 text-center px-3 py-2 text-sm font-medium text-primary hover:text-primary-900 hover:bg-primary/10 rounded-lg transition-colors"
                 >
                   <Eye className="w-4 h-4 mx-auto mb-1" />
                   Voir

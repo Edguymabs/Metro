@@ -109,7 +109,7 @@ const CalibrationCalendarsPage: React.FC = () => {
             type="checkbox"
             checked={showInactive}
             onChange={(e) => setShowInactive(e.target.checked)}
-            className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+            className="rounded border-gray-300 text-primary focus:ring-primary"
           />
           Afficher les calendriers inactifs
         </label>
@@ -170,7 +170,7 @@ const CalibrationCalendarsPage: React.FC = () => {
                     </p>
                   )}
                   {calendar.calibrationMethod?.instrumentType && (
-                    <span className="inline-block mt-2 px-2 py-1 text-xs font-medium bg-primary-100 text-primary-800 rounded">
+                    <span className="inline-block mt-2 px-2 py-1 text-xs font-medium bg-primary/10 text-primary rounded-pem">
                       {calendar.calibrationMethod.instrumentType.name}
                     </span>
                   )}
@@ -193,7 +193,7 @@ const CalibrationCalendarsPage: React.FC = () => {
                   </button>
                   <Link
                     to={`/calendriers-etalonnage/${calendar.id}/modifier`}
-                    className="text-gray-400 hover:text-primary-600"
+                    className="text-gray-400 hover:text-primary"
                   >
                     <Edit className="w-4 h-4" />
                   </Link>
@@ -235,7 +235,7 @@ const CalibrationCalendarsPage: React.FC = () => {
               <div className="mt-4">
                 <Link
                   to={`/calendriers-etalonnage/${calendar.id}`}
-                  className="text-sm text-primary-600 hover:text-primary-700 font-medium"
+                  className="text-sm text-primary hover:text-primary-600 font-medium"
                 >
                   Voir les détails →
                 </Link>

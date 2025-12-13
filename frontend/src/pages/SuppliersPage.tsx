@@ -117,7 +117,7 @@ const SuppliersPage: React.FC = () => {
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-gray-200">
-                  <span className="text-primary-600 text-sm font-medium">
+                  <span className="text-primary text-sm font-medium">
                     Voir les détails →
                   </span>
                 </div>

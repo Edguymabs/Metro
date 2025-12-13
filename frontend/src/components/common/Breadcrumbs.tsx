@@ -14,14 +14,14 @@ interface BreadcrumbsProps {
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
   return (
     <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-4">
-      <Link to="/" className="hover:text-primary-600 transition-colors">
+      <Link to="/" className="hover:text-primary transition-colors">
         <Home className="w-4 h-4" />
       </Link>
       {items.map((item, index) => (
         <React.Fragment key={index}>
           <ChevronRight className="w-4 h-4" />
           {item.href && index < items.length - 1 ? (
-            <Link to={item.href} className="hover:text-primary-600 transition-colors">
+            <Link to={item.href} className="hover:text-primary transition-colors">
               {item.label}
             </Link>
           ) : (

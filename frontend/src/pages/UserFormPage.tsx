@@ -234,7 +234,7 @@ const UserFormPage: React.FC = () => {
               name="isActive"
               checked={formData.isActive}
               onChange={handleChange}
-              className="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
+              className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
             />
             <label htmlFor="isActive" className="ml-2 text-sm font-medium text-gray-700">
               Compte actif

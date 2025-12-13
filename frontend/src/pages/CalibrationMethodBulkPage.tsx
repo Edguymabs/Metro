@@ -173,7 +173,7 @@ const CalibrationMethodBulkPage: React.FC = () => {
                 <div className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
                     isCompleted ? 'bg-green-500 text-white' :
-                    isActive ? 'bg-primary-600 text-white' :
+                    isActive ? 'bg-primary text-white' :
                     'bg-gray-200 text-gray-600'
                   }`}>
                     <Icon className="w-5 h-5" />
@@ -271,7 +271,7 @@ const CalibrationMethodBulkPage: React.FC = () => {
                     type="checkbox"
                     checked={selectedInstruments.includes(instrument.id)}
                     onChange={() => handleInstrumentToggle(instrument.id)}
-                    className="mr-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                    className="mr-4 rounded border-gray-300 text-primary focus:ring-primary"
                   />
                   <div className="flex-1">
                     <div className="font-medium text-gray-900">{instrument.name}</div>
@@ -332,7 +332,7 @@ const CalibrationMethodBulkPage: React.FC = () => {
                   key={method.id}
                   className={`flex items-start p-4 border-2 rounded-lg cursor-pointer transition-colors ${
                     selectedMethod?.id === method.id
-                      ? 'border-primary-600 bg-primary-50'
+                      ? 'border-primary bg-primary/10'
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >

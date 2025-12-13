@@ -95,7 +95,7 @@ const DocumentList: React.FC<DocumentListProps> = ({
             <div className="flex items-center gap-2 ml-4">
               <button
                 onClick={() => handleDownload(doc)}
-                className="p-2 text-gray-600 hover:text-primary-600 transition-colors"
+                className="p-2 text-gray-600 hover:text-primary transition-colors"
                 title="Télécharger"
               >
                 <Download className="w-4 h-4" />

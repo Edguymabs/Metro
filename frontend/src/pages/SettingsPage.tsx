@@ -129,7 +129,7 @@ const SettingsPage: React.FC = () => {
             <p>Aucun type d'instrument enregistré</p>
             <button
               onClick={() => handleOpenModal()}
-              className="mt-4 text-primary-600 hover:underline"
+              className="mt-4 text-primary hover:underline"
             >
               Créer le premier type
             </button>
@@ -154,7 +154,7 @@ const SettingsPage: React.FC = () => {
                   <div className="flex gap-2 ml-2">
                     <button
                       onClick={() => handleOpenModal(type)}
-                      className="text-gray-400 hover:text-primary-600 transition-colors"
+                      className="text-gray-400 hover:text-primary transition-colors"
                       title="Modifier"
                     >
                       <Edit className="w-4 h-4" />

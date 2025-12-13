@@ -167,7 +167,7 @@ const InterventionsPage: React.FC = () => {
                     <td className="table-cell">
                       <Link
                         to={`/instruments/${intervention.instrument?.id}`}
-                        className="text-primary-600 hover:underline"
+                        className="text-primary hover:underline"
                         onClick={(e) => e.stopPropagation()}
                       >
                         {intervention.instrument?.name}
@@ -192,7 +192,7 @@ const InterventionsPage: React.FC = () => {
                     <td className="table-cell">{intervention.supplier?.name || '-'}</td>
                     <td className="table-cell">{formatCurrency(intervention.cost)}</td>
                     <td className="table-cell">
-                      <span className="text-primary-600 font-medium">
+                      <span className="text-primary font-medium">
                         Voir →
                       </span>
                     </td>

@@ -55,7 +55,7 @@ const InterventionDetailPage: React.FC = () => {
     return (
       <div className="text-center py-12">
         <p className="text-gray-600">Intervention non trouvée</p>
-        <Link to="/interventions" className="mt-4 inline-block text-primary-600 hover:underline">
+        <Link to="/interventions" className="mt-4 inline-block text-primary hover:underline">
           Retour à la liste
         </Link>
       </div>
@@ -118,7 +118,7 @@ const InterventionDetailPage: React.FC = () => {
             <p className="mt-1 text-gray-900">
               <Link
                 to={`/instruments/${intervention.instrument?.id}`}
-                className="text-primary-600 hover:underline"
+                className="text-primary hover:underline"
               >
                 {intervention.instrument?.name}
               </Link>
@@ -206,7 +206,7 @@ const InterventionDetailPage: React.FC = () => {
                 </div>
                 <a
                   href={`/api/documents/${doc.id}/download`}
-                  className="text-primary-600 hover:underline text-sm"
+                  className="text-primary hover:underline text-sm"
                   download
                 >
                   Télécharger

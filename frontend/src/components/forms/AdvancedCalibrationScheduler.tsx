@@ -147,7 +147,7 @@ const AdvancedCalibrationScheduler: React.FC<AdvancedCalibrationSchedulerProps> 
         <button
           type="button"
           onClick={() => setShowAdvanced(!showAdvanced)}
-          className="text-sm text-primary-600 hover:text-primary-700"
+          className="text-sm text-primary hover:text-primary-600"
         >
           {showAdvanced ? 'Mode simple' : 'Mode avancé'}
         </button>
@@ -162,7 +162,7 @@ const AdvancedCalibrationScheduler: React.FC<AdvancedCalibrationSchedulerProps> 
             onClick={() => handleRecurrenceTypeChange('FIXED_INTERVAL')}
             className={`p-3 rounded-lg border-2 text-left transition-colors ${
               schedule.recurrenceType === 'FIXED_INTERVAL'
-                ? 'border-primary-600 bg-primary-50'
+                ? 'border-primary bg-primary/10'
                 : 'border-gray-200 hover:border-gray-300'
             }`}
           >
@@ -176,7 +176,7 @@ const AdvancedCalibrationScheduler: React.FC<AdvancedCalibrationSchedulerProps> 
             onClick={() => handleRecurrenceTypeChange('CALENDAR_WEEKLY')}
             className={`p-3 rounded-lg border-2 text-left transition-colors ${
               schedule.recurrenceType === 'CALENDAR_WEEKLY'
-                ? 'border-primary-600 bg-primary-50'
+                ? 'border-primary bg-primary/10'
                 : 'border-gray-200 hover:border-gray-300'
             }`}
           >
@@ -192,7 +192,7 @@ const AdvancedCalibrationScheduler: React.FC<AdvancedCalibrationSchedulerProps> 
                 onClick={() => handleRecurrenceTypeChange('CALENDAR_DAILY')}
                 className={`p-3 rounded-lg border-2 text-left transition-colors ${
                   schedule.recurrenceType === 'CALENDAR_DAILY'
-                    ? 'border-primary-600 bg-primary-50'
+                    ? 'border-primary bg-primary/10'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
@@ -206,7 +206,7 @@ const AdvancedCalibrationScheduler: React.FC<AdvancedCalibrationSchedulerProps> 
                 onClick={() => handleRecurrenceTypeChange('CALENDAR_MONTHLY')}
                 className={`p-3 rounded-lg border-2 text-left transition-colors ${
                   schedule.recurrenceType === 'CALENDAR_MONTHLY'
-                    ? 'border-primary-600 bg-primary-50'
+                    ? 'border-primary bg-primary/10'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >
@@ -220,7 +220,7 @@ const AdvancedCalibrationScheduler: React.FC<AdvancedCalibrationSchedulerProps> 
                 onClick={() => handleRecurrenceTypeChange('CALENDAR_YEARLY')}
                 className={`p-3 rounded-lg border-2 text-left transition-colors col-span-2 ${
                   schedule.recurrenceType === 'CALENDAR_YEARLY'
-                    ? 'border-primary-600 bg-primary-50'
+                    ? 'border-primary bg-primary/10'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
               >

@@ -325,7 +325,7 @@ const CalibrationCalendarFormPage: React.FC = () => {
                       type="checkbox"
                       checked={selectedInstruments.includes(instrument.id)}
                       onChange={() => toggleInstrument(instrument.id)}
-                      className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                      className="rounded border-gray-300 text-primary focus:ring-primary"
                     />
                     <div className="flex-1">
                       <p className="text-sm font-medium text-gray-900">

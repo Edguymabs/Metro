@@ -54,7 +54,7 @@ const SiteDetailPage: React.FC = () => {
     return (
       <div className="text-center py-12">
         <p className="text-gray-600">Site non trouvé</p>
-        <Link to="/sites" className="mt-4 inline-block text-primary-600 hover:underline">
+        <Link to="/sites" className="mt-4 inline-block text-primary hover:underline">
           Retour à la liste
         </Link>
       </div>
@@ -116,7 +116,7 @@ const SiteDetailPage: React.FC = () => {
         </div>
         <div className="card">
           <p className="text-sm text-gray-600">En maintenance</p>
-          <p className="text-2xl font-bold text-blue-600 mt-1">{stats.enMaintenance}</p>
+          <p className="text-2xl font-bold text-primary mt-1">{stats.enMaintenance}</p>
         </div>
         <div className="card">
           <p className="text-sm text-gray-600">Cassés</p>
@@ -163,7 +163,7 @@ const SiteDetailPage: React.FC = () => {
               {site.contactEmail && (
                 <div className="flex items-center gap-2">
                   <Mail className="w-4 h-4 text-gray-400" />
-                  <a href={`mailto:${site.contactEmail}`} className="text-primary-600 hover:underline text-sm">
+                  <a href={`mailto:${site.contactEmail}`} className="text-primary hover:underline text-sm">
                     {site.contactEmail}
                   </a>
                 </div>
@@ -171,7 +171,7 @@ const SiteDetailPage: React.FC = () => {
               {site.contactPhone && (
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4 text-gray-400" />
-                  <a href={`tel:${site.contactPhone}`} className="text-primary-600 hover:underline text-sm">
+                  <a href={`tel:${site.contactPhone}`} className="text-primary hover:underline text-sm">
                     {site.contactPhone}
                   </a>
                 </div>
@@ -217,7 +217,7 @@ const SiteDetailPage: React.FC = () => {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <Link
                         to={`/instruments/${instrument.id}`}
-                        className="text-primary-600 hover:underline font-medium"
+                        className="text-primary hover:underline font-medium"
                       >
                         {instrument.serialNumber}
                       </Link>

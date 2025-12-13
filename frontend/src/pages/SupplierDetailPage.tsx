@@ -53,7 +53,7 @@ const SupplierDetailPage: React.FC = () => {
     return (
       <div className="text-center py-12">
         <p className="text-gray-600">Fournisseur non trouvé</p>
-        <Link to="/fournisseurs" className="mt-4 inline-block text-primary-600 hover:underline">
+        <Link to="/fournisseurs" className="mt-4 inline-block text-primary hover:underline">
           Retour à la liste
         </Link>
       </div>
@@ -106,7 +106,7 @@ const SupplierDetailPage: React.FC = () => {
                 <Mail className="w-5 h-5 text-gray-400" />
                 <div>
                   <p className="text-sm text-gray-600">Email</p>
-                  <a href={`mailto:${supplier.email}`} className="text-primary-600 hover:underline">
+                  <a href={`mailto:${supplier.email}`} className="text-primary hover:underline">
                     {supplier.email}
                   </a>
                 </div>
@@ -117,7 +117,7 @@ const SupplierDetailPage: React.FC = () => {
                 <Phone className="w-5 h-5 text-gray-400" />
                 <div>
                   <p className="text-sm text-gray-600">Téléphone</p>
-                  <a href={`tel:${supplier.phone}`} className="text-primary-600 hover:underline">
+                  <a href={`tel:${supplier.phone}`} className="text-primary hover:underline">
                     {supplier.phone}
                   </a>
                 </div>
@@ -201,7 +201,7 @@ const SupplierDetailPage: React.FC = () => {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <Link
                         to={`/interventions/${intervention.id}`}
-                        className="text-primary-600 hover:underline"
+                        className="text-primary hover:underline"
                       >
                         {intervention.instrument?.name}
                       </Link>

@@ -54,7 +54,7 @@ const SitesPage: React.FC = () => {
               >
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-lg font-semibold text-gray-900 flex items-center">
-                    <MapPin className="w-5 h-5 mr-2 text-primary-600" />
+                    <MapPin className="w-5 h-5 mr-2 text-primary" />
                     {site.name}
                   </h3>
                   {!site.active && (
@@ -76,7 +76,7 @@ const SitesPage: React.FC = () => {
                   <span className="text-sm text-gray-500">
                     {(site as any)._count?.instruments || 0} instruments
                   </span>
-                  <span className="text-primary-600 text-sm font-medium">
+                  <span className="text-primary text-sm font-medium">
                     Voir les détails →
                   </span>
                 </div>

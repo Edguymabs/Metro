@@ -160,7 +160,7 @@ const MaintenanceMessagesPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="bg-white rounded-lg shadow p-4">
             <div className="flex items-center">
-              <BarChart3 className="w-8 h-8 text-blue-600" />
+              <BarChart3 className="w-8 h-8 text-primary" />
               <div className="ml-3">
                 <p className="text-sm font-medium text-gray-500">Total</p>
                 <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
@@ -180,7 +180,7 @@ const MaintenanceMessagesPage: React.FC = () => {
           
           <div className="bg-white rounded-lg shadow p-4">
             <div className="flex items-center">
-              <Clock className="w-8 h-8 text-yellow-600" />
+              <Clock className="w-8 h-8 text-primary" />
               <div className="ml-3">
                 <p className="text-sm font-medium text-gray-500">Programmés</p>
                 <p className="text-2xl font-bold text-gray-900">{stats.scheduled}</p>

@@ -98,7 +98,7 @@ const Calendar: React.FC<CalendarProps> = ({
   const CustomToolbar = ({ label, onNavigate }: any) => (
     <div className="flex items-center justify-between mb-4 p-4 bg-white rounded-lg shadow">
       <div className="flex items-center gap-2">
-        <CalendarIcon className="w-5 h-5 text-primary-600" />
+        <CalendarIcon className="w-5 h-5 text-primary" />
         <h3 className="text-lg font-semibold text-gray-900">{label}</h3>
       </div>
       <div className="flex items-center gap-2">
@@ -110,7 +110,7 @@ const Calendar: React.FC<CalendarProps> = ({
         </button>
         <button
           onClick={() => onNavigate('TODAY')}
-          className="px-3 py-2 rounded-lg bg-primary-100 text-primary-700 hover:bg-primary-200 transition-colors"
+          className="px-3 py-2 rounded-lg bg-primary/10 text-primary-600 hover:bg-primary/20 transition-colors"
         >
           Aujourd'hui
         </button>

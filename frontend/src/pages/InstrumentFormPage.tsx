@@ -359,7 +359,7 @@ const InstrumentFormPage: React.FC = () => {
                   type="radio"
                   checked={calibrationMode === 'method'}
                   onChange={() => setCalibrationMode('method')}
-                  className="text-primary-600 focus:ring-primary-500"
+                  className="text-primary focus:ring-primary"
                 />
                 <span className="text-sm text-gray-700 font-medium">Méthode prédéfinie</span>
               </label>
@@ -368,7 +368,7 @@ const InstrumentFormPage: React.FC = () => {
                   type="radio"
                   checked={calibrationMode === 'advanced'}
                   onChange={() => setCalibrationMode('advanced')}
-                  className="text-primary-600 focus:ring-primary-500"
+                  className="text-primary focus:ring-primary"
                 />
                 <span className="text-sm text-gray-700 font-medium">Étalonnage personnalisé</span>
               </label>

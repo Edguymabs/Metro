@@ -125,7 +125,7 @@ const InstrumentsPage: React.FC = () => {
                     className="hover:bg-gray-50 cursor-pointer transition-colors duration-200"
                     onClick={() => navigate(`/instruments/${instrument.id}`)}
                   >
-                    <td className="table-cell font-medium text-primary-600">
+                    <td className="table-cell font-medium text-primary">
                       {instrument.serialNumber}
                     </td>
                     <td className="table-cell">
@@ -156,7 +156,7 @@ const InstrumentsPage: React.FC = () => {
                       )}
                     </td>
                     <td className="table-cell">
-                      <span className="text-primary-600 font-medium">
+                      <span className="text-primary font-medium">
                         Voir →
                       </span>
                     </td>

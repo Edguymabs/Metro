@@ -623,7 +623,7 @@ const CalibrationPlanningPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="mt-4 text-sm text-primary group-hover:text-primary-dark font-medium">
+              <div className="mt-4 text-sm text-primary group-hover:text-primary-600 font-medium">
                 Voir les instruments →
               </div>
             </button>
@@ -713,14 +713,14 @@ const CalibrationPlanningPage: React.FC = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <Link
                       to={`/instruments/${cal.instrumentId}`}
-                      className="text-primary hover:text-primary-dark mr-4"
+                      className="text-primary hover:text-primary-600 mr-4"
                       onClick={(e) => e.stopPropagation()}
                     >
                       Voir
                     </Link>
                     <Link
                       to={`/interventions/nouvelle?instrumentId=${cal.instrumentId}`}
-                      className="text-primary-600 hover:text-primary-900"
+                      className="text-primary hover:text-primary-900"
                       onClick={(e) => e.stopPropagation()}
                     >
                       Effectuer

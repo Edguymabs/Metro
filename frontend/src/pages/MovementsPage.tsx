@@ -132,7 +132,7 @@ const MovementsPage: React.FC = () => {
           <div className="text-center py-12">
             <TruckIcon className="w-16 h-16 mx-auto text-gray-300 mb-4" />
             <p className="text-gray-600">Aucun mouvement enregistré</p>
-            <Link to="/mouvements/nouveau" className="mt-4 inline-block text-primary-600 hover:underline">
+            <Link to="/mouvements/nouveau" className="mt-4 inline-block text-primary hover:underline">
               Créer le premier mouvement
             </Link>
           </div>
@@ -177,7 +177,7 @@ const MovementsPage: React.FC = () => {
                     <td className="px-6 py-4">
                       <Link
                         to={`/instruments/${movement.instrument?.id}`}
-                        className="text-primary-600 hover:underline font-medium"
+                        className="text-primary hover:underline font-medium"
                         onClick={(e) => e.stopPropagation()}
                       >
                         {movement.instrument?.name}

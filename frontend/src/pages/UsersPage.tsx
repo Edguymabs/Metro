@@ -153,7 +153,7 @@ const UsersPage: React.FC = () => {
                       <div className="flex justify-end gap-2">
                         <Link
                           to={`/utilisateurs/${user.id}/modifier`}
-                          className="text-primary-600 hover:text-primary-900"
+                          className="text-primary hover:text-primary-900"
                           title="Modifier"
                         >
                           <Edit className="w-4 h-4" />

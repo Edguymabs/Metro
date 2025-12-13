@@ -137,7 +137,7 @@ const CalibrationMethodsPage: React.FC = () => {
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-gray-900">{method.name}</h3>
                   {method.instrumentType && (
-                    <span className="inline-block mt-2 px-2 py-1 text-xs font-medium bg-primary-100 text-primary-800 rounded">
+                    <span className="inline-block mt-2 px-2 py-1 text-xs font-medium bg-primary/10 text-primary rounded">
                       {method.instrumentType.name}
                     </span>
                   )}
@@ -145,7 +145,7 @@ const CalibrationMethodsPage: React.FC = () => {
                 <div className="flex gap-2">
                   <Link
                     to={`/methodes-etalonnage/${method.id}/modifier`}
-                    className="text-gray-400 hover:text-primary-600"
+                    className="text-gray-400 hover:text-primary"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <Edit className="w-4 h-4" />
@@ -208,7 +208,7 @@ const CalibrationMethodsPage: React.FC = () => {
               <div className="mt-4">
                 <Link
                   to={`/methodes-etalonnage/${method.id}`}
-                  className="text-sm text-primary-600 hover:text-primary-700 font-medium"
+                  className="text-sm text-primary hover:text-primary-600 font-medium"
                 >
                   Voir les détails →
                 </Link>

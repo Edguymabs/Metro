@@ -107,7 +107,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
         <div
           className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
             dragActive
-              ? 'border-primary-500 bg-primary-50'
+              ? 'border-primary bg-primary/10'
               : 'border-gray-300 hover:border-primary-400'
           } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
           onDragEnter={handleDrag}
@@ -127,7 +127,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
       ) : (
         <div className="flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-lg">
           <div className="flex items-center gap-3">
-            <File className="w-8 h-8 text-primary-600" />
+            <File className="w-8 h-8 text-primary" />
             <div>
               <p className="text-sm font-medium text-gray-900">{selectedFile.name}</p>
               <p className="text-xs text-gray-500">

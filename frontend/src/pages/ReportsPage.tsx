@@ -63,8 +63,8 @@ const ReportsPage: React.FC = () => {
                 {formatCurrency(interventionStats?.totalCost || 0)}
               </p>
             </div>
-            <div className="p-3 bg-blue-100 rounded-full">
-              <TrendingUp className="w-6 h-6 text-blue-600" />
+            <div className="p-3 bg-primary/10 rounded-full">
+              <TrendingUp className="w-6 h-6 text-primary" />
             </div>
           </div>
         </div>
@@ -109,8 +109,8 @@ const ReportsPage: React.FC = () => {
                 )}
               </p>
             </div>
-            <div className="p-3 bg-purple-100 rounded-full">
-              <TrendingUp className="w-6 h-6 text-purple-600" />
+            <div className="p-3 bg-gray-100 rounded-full">
+              <TrendingUp className="w-6 h-6 text-gray-600" />
             </div>
           </div>
         </div>
@@ -184,7 +184,7 @@ const ReportsPage: React.FC = () => {
             </div>
             <div>
               <p className="text-sm text-gray-600">À venir (30j)</p>
-              <p className="text-2xl font-bold text-yellow-600">
+              <p className="text-2xl font-bold text-primary">
                 {instrumentStats?.upcomingCalibrations || 0}
               </p>
             </div>
@@ -205,9 +205,9 @@ const ReportsPage: React.FC = () => {
       </div>
 
       {/* Recommandations */}
-      <div className="card bg-yellow-50 border border-yellow-200">
+      <div className="alert-warning">
         <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
-          <AlertCircle className="w-5 h-5 mr-2 text-yellow-600" />
+          <AlertCircle className="w-5 h-5 mr-2 text-primary" />
           Actions Recommandées
         </h2>
         <ul className="space-y-2 text-sm text-gray-700">
@@ -222,7 +222,7 @@ const ReportsPage: React.FC = () => {
           )}
           {instrumentStats && instrumentStats.upcomingCalibrations > 0 && (
             <li className="flex items-start">
-              <span className="text-yellow-600 mr-2">•</span>
+              <span className="text-primary mr-2">•</span>
               <span>
                 {instrumentStats.upcomingCalibrations} étalonnage(s) prévu(s) dans les 30 prochains
                 jours - planifiez les interventions

@@ -92,7 +92,7 @@ const InstrumentDetailPage: React.FC = () => {
     return (
       <div className="text-center py-12">
         <p className="text-gray-600">Instrument non trouvé</p>
-        <Link to="/instruments" className="mt-4 inline-block text-primary-600 hover:underline">
+        <Link to="/instruments" className="mt-4 inline-block text-primary hover:underline">
           Retour à la liste
         </Link>
       </div>
@@ -200,7 +200,7 @@ const InstrumentDetailPage: React.FC = () => {
           </h2>
           <Link
             to={`/interventions/nouvelle?instrumentId=${id}`}
-            className="text-primary-600 hover:underline text-sm"
+            className="text-primary hover:underline text-sm"
           >
             + Nouvelle intervention
           </Link>
@@ -239,7 +239,7 @@ const InstrumentDetailPage: React.FC = () => {
                     <td className="px-4 py-3 text-sm">
                       <Link
                         to={`/interventions/${intervention.id}`}
-                        className="text-primary-600 hover:underline"
+                        className="text-primary hover:underline"
                       >
                         Voir
                       </Link>

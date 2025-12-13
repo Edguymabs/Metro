@@ -230,7 +230,7 @@ const MaintenanceMessageFormPage: React.FC = () => {
                   type="checkbox"
                   checked={formData.isActive}
                   onChange={(e) => handleChange('isActive', e.target.checked)}
-                  className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                  className="rounded border-gray-300 text-primary focus:ring-primary"
                 />
                 <span className="ml-2 text-sm text-gray-700">Message actif</span>
               </label>
@@ -307,7 +307,7 @@ const MaintenanceMessageFormPage: React.FC = () => {
                               : current.filter(r => r !== role);
                             handleChange('targetRoles', updated);
                           }}
-                          className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                          className="rounded border-gray-300 text-primary focus:ring-primary"
                         />
                         <span className="ml-2 text-sm text-gray-700">{role}</span>
                       </label>
