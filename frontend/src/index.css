@@ -2,9 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Charte Graphique PEM - Variables CSS */
+:root {
+  /* Couleurs principales */
+  --color-primary: #fecb00;
+  --color-text-primary: #4a4a4a;
+  --color-text-secondary: #636363;
+  --color-bg-main: #e0e0e0;
+  --color-bg-form: #eceaea;
+  --color-dark: #222222;
+  --color-white: #ffffff;
+  
+  /* Polices */
+  --font-primary: 'Oswald', sans-serif;
+  --font-secondary: 'Fira Sans', sans-serif;
+}
+
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900;
+    @apply bg-bg-main text-text-secondary;
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    line-height: 18px;
+  }
+  
+  /* Titres - Style PEM avec Oswald */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-primary);
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+  }
+  
+  h1 {
+    @apply text-h1;
+  }
+  
+  h2 {
+    @apply text-h2;
+  }
+  
+  h3 {
+    @apply text-h3;
+  }
+  
+  h4 {
+    @apply text-h4;
+  }
+  
+  h5 {
+    @apply text-h5;
+    color: var(--color-primary);
+  }
+  
+  p {
+    font-family: var(--font-secondary);
+    @apply text-body;
+    color: var(--color-text-secondary);
+    margin: 10px 0;
+  }
+  
+  /* Liens */
+  a {
+    transition: color 0.2s ease;
+  }
+  
+  a:hover {
+    color: var(--color-primary);
   }
 }
 
@@ -24,28 +87,49 @@
 }
 
 @layer components {
+  /* Boutons - Style PEM */
   .btn-primary {
-    @apply px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 font-medium;
+    font-family: var(--font-primary);
+    @apply px-4 py-2 bg-primary text-text-primary rounded-pem hover:bg-dark-gray hover:text-primary transition-all duration-200 font-normal uppercase tracking-pem-button;
+    border: 2px solid var(--color-text-primary);
+    font-size: 14px;
+    line-height: 30px;
   }
 
   .btn-secondary {
-    @apply px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors duration-200 font-medium;
+    font-family: var(--font-primary);
+    @apply px-4 py-2 bg-transparent text-text-primary rounded-pem hover:bg-dark-gray hover:text-primary transition-all duration-200 font-normal uppercase tracking-pem-button;
+    border: 2px solid var(--color-text-primary);
+    font-size: 14px;
+    line-height: 30px;
   }
 
   .btn-danger {
-    @apply px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200 font-medium;
+    font-family: var(--font-primary);
+    @apply px-4 py-2 bg-red-600 text-white rounded-pem hover:bg-red-700 transition-colors duration-200 font-normal uppercase tracking-pem-button;
+    border: 2px solid #dc2626;
+    font-size: 14px;
+    line-height: 30px;
   }
 
+  /* Champs de formulaire - Style PEM */
   .input-field {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+    font-family: var(--font-secondary);
+    @apply w-full px-3 py-2 border border-gray-300 rounded-pem focus:ring-2 focus:ring-primary focus:border-transparent;
+    background-color: var(--color-bg-form);
+    color: var(--color-text-primary);
+    font-size: 14px;
+    line-height: 20px;
   }
 
+  /* Cards - Style PEM avec coins carrés */
   .card {
-    @apply bg-white rounded-lg shadow-md p-6;
+    @apply bg-white rounded-pem shadow-md p-6;
   }
 
+  /* Tables */
   .table-container {
-    @apply overflow-x-auto bg-white rounded-lg shadow;
+    @apply overflow-x-auto bg-white rounded-pem shadow;
   }
 
   .table {
@@ -53,11 +137,13 @@
   }
 
   .table-header {
-    @apply bg-gray-50;
+    @apply bg-bg-main;
   }
 
   .table-header-cell {
-    @apply px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+    font-family: var(--font-primary);
+    @apply px-6 py-3 text-left text-xs font-medium uppercase tracking-wider;
+    color: var(--color-text-primary);
   }
 
   .table-body {
@@ -65,15 +151,23 @@
   }
 
   .table-cell {
-    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900;
+    font-family: var(--font-secondary);
+    @apply px-6 py-4 whitespace-nowrap text-sm;
+    color: var(--color-text-secondary);
   }
 
   .table-row-hover {
-    @apply hover:bg-gray-50 cursor-pointer transition-colors duration-200;
+    @apply cursor-pointer transition-colors duration-200;
+  }
+  
+  .table-row-hover:hover {
+    background-color: rgba(254, 203, 0, 0.1);
   }
 
+  /* Badges */
   .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    font-family: var(--font-primary);
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-pem text-xs font-medium uppercase;
   }
 
   .badge-success {
@@ -81,7 +175,8 @@
   }
 
   .badge-warning {
-    @apply bg-yellow-100 text-yellow-800;
+    background-color: rgba(254, 203, 0, 0.2);
+    color: var(--color-text-primary);
   }
 
   .badge-danger {
@@ -93,7 +188,8 @@
   }
 
   .badge-gray {
-    @apply bg-gray-100 text-gray-800;
+    @apply bg-gray-100;
+    color: var(--color-text-primary);
   }
 }
 
