@@ -154,7 +154,7 @@ const CalibrationMethodFormPage: React.FC = () => {
       {/* Formulaire */}
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Informations générales */}
-        <div className="bg-white shadow-sm rounded-lg p-6 space-y-6">
+        <div className="card p-6 space-y-6">
           <h2 className="text-lg font-semibold text-gray-900">
             Informations générales
           </h2>
@@ -234,7 +234,7 @@ const CalibrationMethodFormPage: React.FC = () => {
         </div>
 
         {/* Configuration de récurrence et tolérance */}
-        <div className="bg-white shadow-sm rounded-lg p-6 space-y-6">
+        <div className="card p-6 space-y-6">
           <h2 className="text-lg font-semibold text-gray-900">
             Récurrence et tolérance
           </h2>
@@ -256,7 +256,7 @@ const CalibrationMethodFormPage: React.FC = () => {
         </div>
 
         {/* Procédure et équipements */}
-        <div className="bg-white shadow-sm rounded-lg p-6 space-y-6">
+        <div className="card p-6 space-y-6">
           <h2 className="text-lg font-semibold text-gray-900">
             Procédure et équipements
           </h2>

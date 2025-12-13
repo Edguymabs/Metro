@@ -258,7 +258,7 @@ const AccountPage: React.FC = () => {
       </div>
 
       {/* Onglets */}
-      <div className="bg-white rounded-lg shadow">
+      <div className="card">
         <div className="border-b border-gray-200">
           <nav className="flex space-x-8 px-6">
             {tabs.map((tab) => {
@@ -269,7 +269,7 @@ const AccountPage: React.FC = () => {
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2 ${
                     activeTab === tab.id
-                      ? 'border-primary-500 text-primary-600'
+                      ? 'border-primary text-primary'
                       : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                   }`}
                 >
@@ -287,8 +287,8 @@ const AccountPage: React.FC = () => {
             <div className="space-y-6">
               <div className="flex items-center space-x-6">
                 <div className="flex-shrink-0">
-                  <div className="w-20 h-20 bg-primary-100 rounded-full flex items-center justify-center">
-                    <User className="w-10 h-10 text-primary-600" />
+                  <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
+                    <User className="w-10 h-10 text-primary" />
                   </div>
                 </div>
                 <div className="flex-1">
@@ -308,7 +308,7 @@ const AccountPage: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-gray-50 rounded-lg p-4">
+                <div className="card-muted">
                   <h3 className="text-sm font-medium text-gray-900 mb-2">Informations personnelles</h3>
                   <dl className="space-y-2">
                     <div>
@@ -326,7 +326,7 @@ const AccountPage: React.FC = () => {
                   </dl>
                 </div>
 
-                <div className="bg-gray-50 rounded-lg p-4">
+                <div className="card-muted">
                   <h3 className="text-sm font-medium text-gray-900 mb-2">Rôle et permissions</h3>
                   <dl className="space-y-2">
                     <div>
@@ -369,27 +369,27 @@ const AccountPage: React.FC = () => {
 
               {user?.role === 'ADMIN' ? (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <div className="alert-info">
                     <div className="flex items-center">
-                      <Bell className="w-8 h-8 text-blue-600" />
+                      <Bell className="w-8 h-8 text-gray-600" />
                       <div className="ml-3">
-                        <h3 className="text-sm font-medium text-blue-900">Notifications</h3>
-                        <p className="text-sm text-blue-700">Créez des messages pour informer les utilisateurs</p>
+                        <h3 className="text-sm font-medium text-gray-900">Notifications</h3>
+                        <p className="text-sm text-gray-700">Créez des messages pour informer les utilisateurs</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                  <div className="alert-warning">
                     <div className="flex items-center">
-                      <AlertTriangle className="w-8 h-8 text-yellow-600" />
+                      <AlertTriangle className="w-8 h-8 text-primary" />
                       <div className="ml-3">
-                        <h3 className="text-sm font-medium text-yellow-900">Maintenance</h3>
-                        <p className="text-sm text-yellow-700">Annoncez les périodes de maintenance</p>
+                        <h3 className="text-sm font-medium text-gray-900">Maintenance</h3>
+                        <p className="text-sm text-gray-800">Annoncez les périodes de maintenance</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <div className="alert-success">
                     <div className="flex items-center">
                       <BarChart3 className="w-8 h-8 text-green-600" />
                       <div className="ml-3">
@@ -400,7 +400,7 @@ const AccountPage: React.FC = () => {
                   </div>
                 </div>
               ) : (
-                <div className="bg-gray-50 rounded-lg p-6 text-center">
+                <div className="card-muted text-center">
                   <Shield className="w-12 h-12 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-gray-900 mb-2">Accès restreint</h3>
                   <p className="text-gray-600">
@@ -423,7 +423,7 @@ const AccountPage: React.FC = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Sécurité */}
-                <div className="bg-gray-50 rounded-lg p-4">
+                <div className="card-muted">
                   <h3 className="text-sm font-medium text-gray-900 mb-4 flex items-center gap-2">
                     <Lock className="w-4 h-4" />
                     Sécurité
@@ -431,22 +431,22 @@ const AccountPage: React.FC = () => {
                   <div className="space-y-3">
                     <button
                       onClick={() => setShowPasswordModal(true)}
-                      className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-white hover:shadow-sm rounded-lg transition-all flex items-center gap-3 border border-transparent hover:border-gray-200"
+                      className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-white hover:shadow-premium rounded-pem transition-all flex items-center gap-3 border border-transparent hover:border-gray-200"
                     >
                       <Key className="w-4 h-4 text-gray-400" />
                       <span>Changer le mot de passe</span>
                     </button>
                     <button
                       onClick={() => showToast('Fonctionnalité à venir', 'info')}
-                      className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-white hover:shadow-sm rounded-lg transition-all flex items-center gap-3 border border-transparent hover:border-gray-200"
+                      className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-white hover:shadow-premium rounded-pem transition-all flex items-center gap-3 border border-transparent hover:border-gray-200"
                     >
                       <Shield className="w-4 h-4 text-gray-400" />
                       <span>Authentification à deux facteurs</span>
-                      <span className="ml-auto text-xs text-gray-500 bg-gray-200 px-2 py-1 rounded">Bientôt</span>
+                      <span className="ml-auto text-xs text-gray-500 bg-gray-200 px-2 py-1 rounded-pem">Bientôt</span>
                     </button>
                     <button
                       onClick={() => showToast('Fonctionnalité à venir', 'info')}
-                      className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-white hover:shadow-sm rounded-lg transition-all flex items-center gap-3 border border-transparent hover:border-gray-200"
+                      className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-white hover:shadow-premium rounded-pem transition-all flex items-center gap-3 border border-transparent hover:border-gray-200"
                     >
                       <Monitor className="w-4 h-4 text-gray-400" />
                       <span>Sessions actives</span>
@@ -456,13 +456,13 @@ const AccountPage: React.FC = () => {
                 </div>
 
                 {/* Préférences */}
-                <div className="bg-gray-50 rounded-lg p-4">
+                <div className="card-muted">
                   <h3 className="text-sm font-medium text-gray-900 mb-4 flex items-center gap-2">
                     <Settings className="w-4 h-4" />
                     Préférences
                   </h3>
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200">
+                    <div className="flex items-center justify-between p-3 bg-white rounded-pem border border-gray-200">
                       <div className="flex items-center gap-3">
                         <Bell className="w-4 h-4 text-gray-400" />
                         <span className="text-sm text-gray-700">Notifications par email</span>
@@ -471,10 +471,10 @@ const AccountPage: React.FC = () => {
                         type="checkbox"
                         checked={preferences.emailNotifications}
                         onChange={(e) => handlePreferenceChange('emailNotifications', e.target.checked)}
-                        className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                        className="rounded border-gray-300 text-primary focus:ring-primary"
                       />
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200">
+                    <div className="flex items-center justify-between p-3 bg-white rounded-pem border border-gray-200">
                       <div className="flex items-center gap-3">
                         <Bell className="w-4 h-4 text-gray-400" />
                         <span className="text-sm text-gray-700">Notifications push</span>
@@ -483,10 +483,10 @@ const AccountPage: React.FC = () => {
                         type="checkbox"
                         checked={preferences.pushNotifications}
                         onChange={(e) => handlePreferenceChange('pushNotifications', e.target.checked)}
-                        className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                        className="rounded border-gray-300 text-primary focus:ring-primary"
                       />
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200">
+                    <div className="flex items-center justify-between p-3 bg-white rounded-pem border border-gray-200">
                       <div className="flex items-center gap-3">
                         <Monitor className="w-4 h-4 text-gray-400" />
                         <span className="text-sm text-gray-700">Mode sombre</span>
@@ -495,7 +495,7 @@ const AccountPage: React.FC = () => {
                         type="checkbox"
                         checked={preferences.darkMode}
                         onChange={(e) => handlePreferenceChange('darkMode', e.target.checked)}
-                        className="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                        className="rounded border-gray-300 text-primary focus:ring-primary"
                       />
                     </div>
                   </div>
@@ -515,15 +515,15 @@ const AccountPage: React.FC = () => {
               </div>
 
               {/* Zone Exports */}
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+              <div className="alert-info p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                  <Download className="w-5 h-5 text-blue-600" />
+                  <Download className="w-5 h-5 text-gray-600" />
                   Exports de données
                 </h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {/* Backup SQL Complet */}
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                  <div className="card p-4">
                     <HardDrive className="w-8 h-8 text-gray-600 mb-3" />
                     <h4 className="font-medium text-gray-900 mb-2">Backup SQL Complet</h4>
                     <p className="text-sm text-gray-600 mb-4">Dump PostgreSQL de toute la base</p>
@@ -537,7 +537,7 @@ const AccountPage: React.FC = () => {
                   </div>
 
                   {/* Export Sélectif */}
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                  <div className="card p-4">
                     <FileText className="w-8 h-8 text-gray-600 mb-3" />
                     <h4 className="font-medium text-gray-900 mb-2">Export Sélectif</h4>
                     <div className="space-y-2 mb-4">
@@ -574,7 +574,7 @@ const AccountPage: React.FC = () => {
                   </div>
 
                   {/* Export Complet */}
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                  <div className="card p-4">
                     <FileSpreadsheet className="w-8 h-8 text-gray-600 mb-3" />
                     <h4 className="font-medium text-gray-900 mb-2">Export Complet</h4>
                     <p className="text-sm text-gray-600 mb-4">Toutes les entités</p>
@@ -606,16 +606,16 @@ const AccountPage: React.FC = () => {
               </div>
 
               {/* Zone Import/Restauration */}
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
+              <div className="alert-warning p-6">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                  <Upload className="w-5 h-5 text-yellow-600" />
+                  <Upload className="w-5 h-5 text-primary" />
                   Import et restauration
-                  <span className="text-xs bg-yellow-200 text-yellow-800 px-2 py-1 rounded">Attention</span>
+                  <span className="text-xs bg-primary/20 text-gray-900 px-2 py-1 rounded-pem">Attention</span>
                 </h3>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Import de données */}
-                  <div className="bg-white rounded-lg p-4 border border-gray-200">
+                  <div className="card p-4">
                     <h4 className="font-medium text-gray-900 mb-2">Importer des données</h4>
                     <p className="text-sm text-gray-600 mb-4">CSV, JSON ou Excel</p>
                     <div className="space-y-2">
@@ -634,7 +634,7 @@ const AccountPage: React.FC = () => {
                         type="file"
                         accept=".csv,.json,.xlsx,.xls"
                         onChange={(e) => setImportFile(e.target.files?.[0] || null)}
-                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
+                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-pem file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
                       />
                       <button
                         onClick={handleImportData}
@@ -647,7 +647,7 @@ const AccountPage: React.FC = () => {
                   </div>
 
                   {/* Restauration SQL */}
-                  <div className="bg-white rounded-lg p-4 border border-red-200">
+                  <div className="card p-4 border-red-200">
                     <h4 className="font-medium text-red-900 mb-2 flex items-center gap-2">
                       <AlertTriangle className="w-4 h-4" />
                       Restaurer Backup SQL
@@ -667,7 +667,7 @@ const AccountPage: React.FC = () => {
               </div>
 
               {/* Liste des backups */}
-              <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="card p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
                     <Database className="w-5 h-5" />
@@ -694,7 +694,7 @@ const AccountPage: React.FC = () => {
                     {backups.map((backup) => (
                       <div
                         key={backup.filename}
-                        className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-primary-300 transition-colors"
+                        className="flex items-center justify-between p-4 card-muted hover:border-primary transition-colors"
                       >
                         <div className="flex-1">
                           <div className="font-medium text-gray-900">{backup.filename}</div>
@@ -705,7 +705,7 @@ const AccountPage: React.FC = () => {
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => handleDownloadBackup(backup.filename)}
-                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                            className="p-2 text-gray-600 hover:bg-gray-100 rounded-pem transition-colors"
                             title="Télécharger"
                           >
                             <Download className="w-4 h-4" />
@@ -716,7 +716,7 @@ const AccountPage: React.FC = () => {
                                 handleDeleteBackup(backup.filename);
                               }
                             }}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-pem transition-colors"
                             title="Supprimer"
                           >
                             <Trash className="w-4 h-4" />
@@ -740,7 +740,7 @@ const AccountPage: React.FC = () => {
           title="Restaurer un backup SQL"
         >
           <div className="space-y-4">
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <div className="alert-error p-4">
               <div className="flex gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
                 <div>
@@ -799,12 +799,12 @@ const AccountPage: React.FC = () => {
       {/* Modal de changement de mot de passe */}
       {showPasswordModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
+          <div className="card-elevated max-w-md w-full mx-4">
             <form onSubmit={handlePasswordChange}>
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center">
-                    <Key className="w-5 h-5 text-primary-600" />
+                  <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                    <Key className="w-5 h-5 text-primary" />
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900">Changer le mot de passe</h3>
@@ -859,7 +859,7 @@ const AccountPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-gray-50 px-6 py-4 flex justify-end gap-3 rounded-b-lg">
+              <div className="bg-gray-50 px-6 py-4 flex justify-end gap-3 rounded-b-pem">
                 <button
                   type="button"
                   onClick={() => {

@@ -219,7 +219,7 @@ const MovementsPage: React.FC = () => {
                           En retard
                         </span>
                       ) : (
-                        <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
+                        <span className="badge badge-info">
                           En cours
                         </span>
                       )}

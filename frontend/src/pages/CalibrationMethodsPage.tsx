@@ -96,10 +96,10 @@ const CalibrationMethodsPage: React.FC = () => {
       </div>
 
       {/* Info */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+      <div className="alert-info p-4">
         <div className="flex gap-3">
-          <FileText className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-          <div className="text-sm text-blue-800">
+          <FileText className="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5" />
+          <div className="text-sm text-gray-800">
             <p className="font-medium">À propos des méthodes d'étalonnage</p>
             <p className="mt-1">
               Les méthodes d'étalonnage sont des templates que vous pouvez appliquer à plusieurs

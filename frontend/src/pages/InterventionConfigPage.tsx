@@ -135,10 +135,10 @@ const InterventionConfigPage: React.FC = () => {
       </div>
 
       {/* Info */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+      <div className="alert-info p-4">
         <div className="flex gap-3">
-          <Settings className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-          <div className="text-sm text-blue-800">
+          <Settings className="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5" />
+          <div className="text-sm text-gray-800">
             <p className="font-medium">À propos de la configuration des interventions</p>
             <p className="mt-1">
               Personnalisez les types d'intervention, statuts et résultats de conformité selon votre secteur d'activité.
@@ -173,7 +173,7 @@ const InterventionConfigPage: React.FC = () => {
           {configs.map((config) => (
             <div
               key={config.id}
-              className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-all duration-200"
+              className="card p-6 hover:shadow-premium-lg transition-all duration-200"
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
@@ -186,7 +186,7 @@ const InterventionConfigPage: React.FC = () => {
                       </span>
                     )}
                     {config.isDefault && (
-                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      <span className="badge badge-info">
                         Par défaut
                       </span>
                     )}

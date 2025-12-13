@@ -157,10 +157,10 @@ const MovementFormPage: React.FC = () => {
               }))}
             />
             {selectedInstrument && (
-              <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="mt-2 alert-info p-3">
                 <div className="flex items-start gap-2">
-                  <Info className="w-4 h-4 text-blue-600 mt-0.5" />
-                  <div className="text-sm text-blue-800">
+                  <Info className="w-4 h-4 text-gray-600 mt-0.5" />
+                  <div className="text-sm text-gray-800">
                     <p>
                       <strong>Site actuel:</strong> {selectedInstrument.site?.name || '-'}
                     </p>

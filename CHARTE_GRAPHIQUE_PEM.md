@@ -250,7 +250,173 @@ Blanc                : #ffffff   [Blanc]
 
 ---
 
-## 4. ESPACEMENTS ET MARGES
+## 4. GROUPES D'ÉLÉMENTS - SYSTÈME DE COHÉRENCE
+
+Cette section définit les groupes stylistiques pour garantir une cohérence visuelle totale sur tout le site. Chaque élément doit appartenir à un groupe et utiliser exclusivement les classes CSS définies pour ce groupe.
+
+### 1. Cartes (Cards) - 3 variantes minimales
+
+#### `.card` (Standard)
+- **Usage** : Conteneurs principaux, sections de contenu, formulaires
+- **Style** : 
+  - Fond : `bg-white`
+  - Bordures : `rounded-pem` (coins carrés), `border border-gray-200`
+  - Ombre : `shadow-premium`
+  - Padding : `p-6`
+- **Classe CSS** : `.card`
+
+#### `.card-muted`
+- **Usage** : Sections d'information secondaires, zones de contexte, fonds subtils
+- **Style** :
+  - Fond : `bg-gray-50`
+  - Bordures : `rounded-pem`, `border border-gray-200`
+  - Ombre : `shadow-xs`
+  - Padding : `p-6`
+- **Classe CSS** : `.card-muted`
+
+#### `.card-elevated`
+- **Usage** : Éléments mis en avant, modals, popovers
+- **Style** :
+  - Fond : `bg-white`
+  - Bordures : `rounded-pem`, `border border-gray-300`
+  - Ombre : `shadow-premium-lg`
+  - Padding : `p-6`
+- **Classe CSS** : `.card-elevated`
+
+**Règle** : Ne jamais utiliser `bg-white rounded-lg shadow` ou autres variantes. Toujours utiliser une des 3 classes ci-dessus.
+
+### 2. Messages/Alertes - Couleurs contextuelles
+
+#### `.alert-info`
+- **Usage** : Messages informatifs, conseils, aide contextuelle
+- **Style** :
+  - Fond : `bg-gray-100`
+  - Bordure gauche : `border-l-4 border-gray-500`
+  - Texte : `text-gray-800`
+  - Padding : `p-4`
+- **Classe CSS** : `.alert-info`
+
+#### `.alert-warning`
+- **Usage** : Avertissements, mises en garde, actions requises
+- **Style** :
+  - Fond : `bg-primary/10` (jaune transparent)
+  - Bordure gauche : `border-l-4 border-primary`
+  - Texte : `text-gray-900`
+  - Padding : `p-4`
+- **Classe CSS** : `.alert-warning`
+
+#### `.alert-error`
+- **Usage** : Erreurs, problèmes critiques, échecs
+- **Style** :
+  - Fond : `bg-red-50`
+  - Bordure gauche : `border-l-4 border-red-600`
+  - Texte : `text-red-900`
+  - Padding : `p-4`
+- **Classe CSS** : `.alert-error`
+
+#### `.alert-success`
+- **Usage** : Confirmations, succès, validations
+- **Style** :
+  - Fond : `bg-green-50`
+  - Bordure gauche : `border-l-4 border-green-600`
+  - Texte : `text-green-900`
+  - Padding : `p-4`
+- **Classe CSS** : `.alert-success`
+
+**Règle** : Ne jamais utiliser `bg-blue-50`, `bg-yellow-50`, `bg-green-50` directement. Toujours utiliser les classes `.alert-*` appropriées.
+
+### 3. Boutons
+
+Les boutons sont déjà définis dans le CSS. Vérifier l'utilisation cohérente :
+
+- **`.btn-primary`** : Bouton principal (jaune avec bordure grise)
+- **`.btn-secondary`** : Bouton secondaire (transparent avec bordure)
+- **`.btn-danger`** : Bouton de suppression (rouge)
+- **`.btn-ghost`** : Bouton discret (transparent sans bordure)
+
+**Règle** : Utiliser exclusivement ces classes. Ne pas créer de variantes personnalisées.
+
+### 4. Statistiques (Stats Cards)
+
+- **Style uniforme** : 
+  - Fond : `bg-white`
+  - Bordures : `rounded-pem`, `border border-gray-200`
+  - Ombre : `shadow-premium`
+  - Padding : `p-6`
+- **Icônes** : Conteneurs gris (`bg-gray-200` à `bg-gray-400`) avec transition vers gris foncé au hover
+- **Texte** : Hiérarchie claire avec gris (900 pour valeurs, 600 pour labels)
+
+**Règle** : Toutes les cartes de statistiques doivent avoir le même style visuel.
+
+### 5. Formulaires
+
+- **Champs** : `.input-field` (déjà défini dans CSS)
+- **Labels** : `.label` avec police Oswald, uppercase
+- **Sections d'information** : Utiliser `.card-muted` au lieu de `bg-blue-50`
+- **Messages d'aide** : Utiliser `.alert-info`
+
+**Règle** : Tous les champs de formulaire doivent utiliser `.input-field`. Toutes les sections d'info doivent utiliser `.card-muted` ou `.alert-info`.
+
+### 6. Navigation
+
+#### Onglets (Tabs)
+- **Style** : Bordure inférieure (`border-b-2`)
+- **Actif** : `border-primary`, `text-primary` ou `text-gray-900`
+- **Inactif** : `border-transparent`, `text-gray-500`
+- **Hover** : `hover:text-gray-700`, `hover:border-gray-300`
+
+#### Breadcrumbs
+- **Style** : Texte gris avec séparateurs
+- **Liens** : `text-gray-600` avec hover vers `text-primary`
+
+#### Sidebar
+- **Style** : Déjà cohérent dans `Layout.tsx`
+- **Actif** : `bg-gray-700`, `text-primary`, `border-l-4 border-primary`
+
+**Règle** : Les onglets doivent utiliser `border-primary` pour l'état actif, pas `border-primary-500`.
+
+### 7. Tables
+
+- **Conteneur** : `.table-container` (déjà défini dans CSS)
+- **Headers** : Gradient gris avec `.table-header`
+- **Rows** : Alternance grise subtile avec `.table-striped`
+- **Borders** : Utiliser `.table-bordered` si nécessaire
+
+**Règle** : Utiliser exclusivement les classes `.table-*` définies dans le CSS.
+
+### 8. Badges
+
+- **Status badges** : Utiliser les classes CSS existantes (`.badge-*`)
+- **Variantes disponibles** :
+  - `.badge-success`, `.badge-warning`, `.badge-danger`, `.badge-info`
+  - `.badge-gray` pour les badges neutres
+  - `.badge-outline` pour les badges avec bordure uniquement
+
+**Règle** : Remplacer tous les `bg-blue-100 text-blue-800`, `bg-yellow-100 text-yellow-800` par les classes `.badge-*` appropriées.
+
+### Règles générales de cohérence
+
+1. **Coins arrondis** : Toujours utiliser `rounded-pem` (coins carrés). Ne jamais utiliser `rounded-lg`, `rounded-xl` sauf cas spécifiques justifiés.
+
+2. **Ombres** : 
+   - `shadow-premium` pour les ombres standard
+   - `shadow-premium-lg` pour les ombres importantes
+   - `shadow-xs` pour les ombres subtiles
+   - Ne jamais utiliser `shadow`, `shadow-sm`, `shadow-md`, `shadow-lg` directement
+
+3. **Couleurs primaires** : 
+   - Utiliser `text-primary`, `bg-primary`, `border-primary` (variables CSS)
+   - Ne jamais utiliser `text-primary-600`, `bg-primary-100`, `border-primary-500` (Tailwind par défaut)
+
+4. **Couleurs contextuelles** : 
+   - Info : Gris (`.alert-info` ou `.badge-gray`)
+   - Warning : Jaune (`.alert-warning` ou `.badge-warning`)
+   - Error : Rouge (`.alert-error` ou `.badge-danger`)
+   - Success : Vert (`.alert-success` ou `.badge-success`)
+
+---
+
+## 5. ESPACEMENTS ET MARGES
 
 ### Espacements Généraux
 - **Padding-top contenu** : `0px` (par défaut)
@@ -264,7 +430,7 @@ Blanc                : #ffffff   [Blanc]
 
 ---
 
-## 5. LOGOS ET IMAGES
+## 6. LOGOS ET IMAGES
 
 ### Logos Identifiés
 - **Logo Header** : `logo-Header-PEM.png`
@@ -276,7 +442,7 @@ Blanc                : #ffffff   [Blanc]
 
 ---
 
-## 6. STYLES SPÉCIFIQUES
+## 7. STYLES SPÉCIFIQUES
 
 ### Overlays et Shaders
 - **Overlay blog** : `rgba(254, 203, 0, 0.6)`
@@ -298,7 +464,7 @@ Blanc                : #ffffff   [Blanc]
 
 ---
 
-## 7. RÈGLES DE STYLE GÉNÉRALES
+## 8. RÈGLES DE STYLE GÉNÉRALES
 
 ### Principes de Design
 1. **Minimalisme** : Design épuré avec des formes géométriques simples
@@ -320,7 +486,7 @@ Blanc                : #ffffff   [Blanc]
 
 ---
 
-## 8. RÉSUMÉ DES CODES COULEURS
+## 9. RÉSUMÉ DES CODES COULEURS
 
 ```css
 /* Couleurs principales */
@@ -339,7 +505,7 @@ Blanc                : #ffffff   [Blanc]
 
 ---
 
-## 9. EXEMPLES D'UTILISATION
+## 10. EXEMPLES D'UTILISATION
 
 ### Bouton Standard
 ```css

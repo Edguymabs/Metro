@@ -191,7 +191,7 @@ const InterventionConfigFormPage: React.FC = () => {
       </div>
 
       {/* Informations générales */}
-      <div className="bg-white rounded-lg shadow p-6">
+      <div className="card p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">Informations générales</h2>
         <div className="grid gap-4 md:grid-cols-2">
           <FormField
@@ -213,7 +213,7 @@ const InterventionConfigFormPage: React.FC = () => {
       </div>
 
       {/* Onglets */}
-      <div className="bg-white rounded-lg shadow">
+      <div className="card">
         <div className="border-b border-gray-200">
           <nav className="flex space-x-8 px-6">
             {tabs.map((tab) => (
@@ -253,7 +253,7 @@ const InterventionConfigFormPage: React.FC = () => {
               </div>
               <div className="space-y-3">
                 {formData.interventionTypes?.map((option, index) => (
-                  <div key={index} className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg">
+                  <div key={index} className="flex items-center gap-3 p-3 border border-gray-200 rounded-pem">
                     <button
                       onClick={() => handleToggleOption('interventionTypes', index)}
                       className={`p-1 rounded ${
@@ -316,7 +316,7 @@ const InterventionConfigFormPage: React.FC = () => {
               </div>
               <div className="space-y-3">
                 {formData.statuses?.map((option, index) => (
-                  <div key={index} className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg">
+                  <div key={index} className="flex items-center gap-3 p-3 border border-gray-200 rounded-pem">
                     <button
                       onClick={() => handleToggleOption('statuses', index)}
                       className={`p-1 rounded ${
@@ -379,7 +379,7 @@ const InterventionConfigFormPage: React.FC = () => {
               </div>
               <div className="space-y-3">
                 {formData.conformityResults?.map((option, index) => (
-                  <div key={index} className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg">
+                  <div key={index} className="flex items-center gap-3 p-3 border border-gray-200 rounded-pem">
                     <button
                       onClick={() => handleToggleOption('conformityResults', index)}
                       className={`p-1 rounded ${

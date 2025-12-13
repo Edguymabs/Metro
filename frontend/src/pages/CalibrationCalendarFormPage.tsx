@@ -202,7 +202,7 @@ const CalibrationCalendarFormPage: React.FC = () => {
       {/* Formulaire */}
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Informations générales */}
-        <div className="bg-white shadow-sm rounded-lg p-6 space-y-6">
+        <div className="card p-6 space-y-6">
           <h2 className="text-lg font-semibold text-gray-900">
             Informations générales
           </h2>
@@ -278,7 +278,7 @@ const CalibrationCalendarFormPage: React.FC = () => {
         </div>
 
         {/* Configuration de récurrence et tolérance */}
-        <div className="bg-white shadow-sm rounded-lg p-6 space-y-6">
+        <div className="card p-6 space-y-6">
           <h2 className="text-lg font-semibold text-gray-900">
             Récurrence et tolérance
           </h2>
@@ -300,7 +300,7 @@ const CalibrationCalendarFormPage: React.FC = () => {
         </div>
 
         {/* Sélection des instruments */}
-        <div className="bg-white shadow-sm rounded-lg p-6 space-y-6">
+        <div className="card p-6 space-y-6">
           <h2 className="text-lg font-semibold text-gray-900">
             Instruments associés
           </h2>
@@ -309,7 +309,7 @@ const CalibrationCalendarFormPage: React.FC = () => {
             Sélectionnez les instruments qui suivront ce calendrier d'étalonnage
           </p>
 
-          <div className="max-h-96 overflow-y-auto border border-gray-200 rounded-lg">
+          <div className="max-h-96 overflow-y-auto border border-gray-200 rounded-pem">
             {instruments.length === 0 ? (
               <p className="p-4 text-sm text-gray-500 text-center">
                 Aucun instrument disponible

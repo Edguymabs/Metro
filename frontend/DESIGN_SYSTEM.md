@@ -4,6 +4,80 @@
 
 Ce design system combine la charte graphique PEM (jaune/or #fecb00) avec une palette de gris ultra-riche (14 nuances) pour créer une interface moderne, professionnelle et hautement hiérarchisée.
 
+**Principe fondamental** : Chaque élément appartient à un groupe stylistique défini pour garantir une cohérence visuelle totale sur tout le site.
+
+---
+
+## 🎯 GROUPES D'ÉLÉMENTS - Système de Cohérence
+
+Pour garantir une cohérence visuelle totale, chaque élément doit appartenir à un groupe stylistique défini. **Ne jamais utiliser de styles personnalisés en dehors de ces groupes.**
+
+### 1. Cartes (Cards) - 3 variantes minimales
+
+**Règle** : Ne jamais utiliser `bg-white rounded-lg shadow` ou autres variantes. Toujours utiliser une des 3 classes ci-dessous.
+
+#### `.card` (Standard)
+- **Usage** : Conteneurs principaux, sections de contenu, formulaires
+- **Style** : Fond blanc, coins carrés (`rounded-pem`), bordure grise, ombre premium, padding 1.5rem
+
+#### `.card-muted`
+- **Usage** : Sections d'information secondaires, zones de contexte, fonds subtils
+- **Style** : Fond gris-50, coins carrés, bordure grise, ombre subtile, padding 1.5rem
+
+#### `.card-elevated`
+- **Usage** : Éléments mis en avant, modals, popovers
+- **Style** : Fond blanc, coins carrés, bordure grise foncée, ombre premium-lg, padding 1.5rem
+
+### 2. Messages/Alertes - Couleurs contextuelles
+
+**Règle** : Ne jamais utiliser `bg-blue-50`, `bg-yellow-50`, `bg-green-50` directement. Toujours utiliser les classes `.alert-*` appropriées.
+
+- **`.alert-info`** : Messages informatifs (fond gris-100, bordure gauche grise-500)
+- **`.alert-warning`** : Avertissements (fond primary/10, bordure gauche primary)
+- **`.alert-error`** : Erreurs (fond rouge-50, bordure gauche rouge-600)
+- **`.alert-success`** : Confirmations (fond vert-50, bordure gauche vert-600)
+
+### 3. Boutons
+
+Utiliser exclusivement :
+- **`.btn-primary`** : Bouton principal (jaune avec bordure grise)
+- **`.btn-secondary`** : Bouton secondaire (transparent avec bordure)
+- **`.btn-danger`** : Bouton de suppression (rouge)
+- **`.btn-ghost`** : Bouton discret (transparent sans bordure)
+
+### 4. Statistiques (Stats Cards)
+
+Style uniforme : `.card` avec icônes dans conteneurs gris et transition vers gris foncé au hover.
+
+### 5. Formulaires
+
+- **Champs** : `.input-field` (déjà défini)
+- **Labels** : `.label` avec police Oswald, uppercase
+- **Sections d'information** : Utiliser `.card-muted` au lieu de `bg-blue-50`
+- **Messages d'aide** : Utiliser `.alert-info`
+
+### 6. Navigation
+
+- **Onglets (Tabs)** : Bordure inférieure, `border-primary` pour actif (pas `border-primary-500`)
+- **Breadcrumbs** : Texte gris avec séparateurs
+- **Sidebar** : Déjà cohérent dans Layout.tsx
+
+### 7. Tables
+
+Utiliser exclusivement les classes `.table-*` définies dans le CSS.
+
+### 8. Badges
+
+- Utiliser les classes `.badge-*` (success, warning, danger, info, gray, outline)
+- Remplacer tous les `bg-blue-100 text-blue-800` par `.badge-info` ou `.badge-gray`
+
+### Règles générales de cohérence
+
+1. **Coins arrondis** : Toujours `rounded-pem` (coins carrés). Ne jamais `rounded-lg`, `rounded-xl` sauf cas spécifiques justifiés.
+2. **Ombres** : `shadow-premium`, `shadow-premium-lg`, `shadow-xs`. Ne jamais `shadow`, `shadow-sm`, `shadow-md`, `shadow-lg` directement.
+3. **Couleurs primaires** : Utiliser `text-primary`, `bg-primary`, `border-primary` (variables CSS). Ne jamais `text-primary-600`, `bg-primary-100`, `border-primary-500`.
+4. **Couleurs contextuelles** : Info (gris), Warning (jaune), Error (rouge), Success (vert).
+
 ---
 
 ## 🎨 Palette de Couleurs

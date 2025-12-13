@@ -403,36 +403,36 @@ const InstrumentFormPage: React.FC = () => {
                 </div>
 
                 {selectedMethod && (
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <h4 className="text-sm font-semibold text-blue-900 mb-2">
+                  <div className="alert-info p-4">
+                    <h4 className="text-sm font-semibold text-gray-900 mb-2">
                       Détails de la méthode : {selectedMethod.name}
                     </h4>
                     {selectedMethod.description && (
-                      <p className="text-sm text-blue-800 mb-3">{selectedMethod.description}</p>
+                      <p className="text-sm text-gray-800 mb-3">{selectedMethod.description}</p>
                     )}
                     <div className="grid grid-cols-2 gap-3 text-sm">
                       <div>
-                        <span className="font-medium text-blue-900">Fréquence :</span>
-                        <span className="ml-2 text-blue-800">
+                        <span className="font-medium text-gray-900">Fréquence :</span>
+                        <span className="ml-2 text-gray-800">
                           {selectedMethod.frequencyValue} {selectedMethod.frequencyUnit?.toLowerCase()}
                         </span>
                       </div>
                       <div>
-                        <span className="font-medium text-blue-900">Tolérance :</span>
-                        <span className="ml-2 text-blue-800">
+                        <span className="font-medium text-gray-900">Tolérance :</span>
+                        <span className="ml-2 text-gray-800">
                           {selectedMethod.toleranceValue} {selectedMethod.toleranceUnit?.toLowerCase()}
                         </span>
                       </div>
                       {selectedMethod.estimatedDuration && (
                         <div>
-                          <span className="font-medium text-blue-900">Durée estimée :</span>
-                          <span className="ml-2 text-blue-800">{selectedMethod.estimatedDuration} min</span>
+                          <span className="font-medium text-gray-900">Durée estimée :</span>
+                          <span className="ml-2 text-gray-800">{selectedMethod.estimatedDuration} min</span>
                         </div>
                       )}
                       {selectedMethod.procedure && (
                         <div className="col-span-2">
-                          <span className="font-medium text-blue-900">Procédure :</span>
-                          <p className="mt-1 text-blue-800">{selectedMethod.procedure}</p>
+                          <span className="font-medium text-gray-900">Procédure :</span>
+                          <p className="mt-1 text-gray-800">{selectedMethod.procedure}</p>
                         </div>
                       )}
                     </div>
@@ -443,7 +443,7 @@ const InstrumentFormPage: React.FC = () => {
 
 
             {calibrationMode === 'advanced' && (
-              <div className="border border-gray-200 rounded-lg p-4 space-y-6">
+              <div className="border border-gray-200 rounded-pem p-4 space-y-6">
                 <h3 className="text-lg font-semibold text-gray-900">Configuration personnalisée</h3>
                 
                 {/* Type de récurrence */}
@@ -453,9 +453,9 @@ const InstrumentFormPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setAdvancedConfig({...advancedConfig, recurrenceType: 'FIXED_INTERVAL'})}
-                      className={`p-3 rounded-lg border-2 text-left transition-colors ${
+                      className={`p-3 rounded-pem border-2 text-left transition-colors ${
                         advancedConfig.recurrenceType === 'FIXED_INTERVAL'
-                          ? 'border-primary-600 bg-primary-50'
+                          ? 'border-primary bg-primary/10'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                     >
@@ -466,9 +466,9 @@ const InstrumentFormPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setAdvancedConfig({...advancedConfig, recurrenceType: 'CALENDAR_WEEKLY'})}
-                      className={`p-3 rounded-lg border-2 text-left transition-colors ${
+                      className={`p-3 rounded-pem border-2 text-left transition-colors ${
                         advancedConfig.recurrenceType === 'CALENDAR_WEEKLY'
-                          ? 'border-primary-600 bg-primary-50'
+                          ? 'border-primary bg-primary/10'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                     >
@@ -531,9 +531,9 @@ const InstrumentFormPage: React.FC = () => {
                               : [...advancedConfig.daysOfWeek, day.value];
                             setAdvancedConfig({...advancedConfig, daysOfWeek: newDays});
                           }}
-                          className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                          className={`px-3 py-2 rounded-pem text-sm font-medium transition-colors ${
                             advancedConfig.daysOfWeek.includes(day.value)
-                              ? 'bg-primary-600 text-white'
+                              ? 'bg-primary text-white'
                               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                           }`}
                         >
@@ -545,12 +545,12 @@ const InstrumentFormPage: React.FC = () => {
                 )}
 
                 {/* Tolérance de retard */}
-                <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <div className="alert-warning p-4">
                   <div className="flex items-start gap-2 mb-3">
-                    <div className="w-5 h-5 text-yellow-600 mt-0.5 flex-shrink-0">⚠️</div>
+                    <div className="w-5 h-5 text-primary mt-0.5 flex-shrink-0">⚠️</div>
                     <div>
-                      <h4 className="text-sm font-medium text-yellow-900">Tolérance de retard</h4>
-                      <p className="text-xs text-yellow-700 mt-1">
+                      <h4 className="text-sm font-medium text-gray-900">Tolérance de retard</h4>
+                      <p className="text-xs text-gray-800 mt-1">
                         Délai supplémentaire acceptable après la date d'étalonnage prévue
                       </p>
                     </div>
@@ -584,10 +584,10 @@ const InstrumentFormPage: React.FC = () => {
                 </div>
 
                 {/* Résumé */}
-                <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="alert-info p-4">
                   <div className="flex items-start gap-2">
-                    <div className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0">ℹ️</div>
-                    <div className="text-sm text-blue-800">
+                    <div className="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0">ℹ️</div>
+                    <div className="text-sm text-gray-800">
                       <p className="font-medium">Résumé de la planification</p>
                       <p className="mt-1">
                         <strong>Fréquence :</strong> {

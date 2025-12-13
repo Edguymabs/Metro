@@ -170,7 +170,7 @@ const MaintenanceMessageFormPage: React.FC = () => {
         {/* Formulaire principal */}
         <div className="lg:col-span-2 space-y-6">
           {/* Informations générales */}
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="card p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Informations générales</h2>
             <div className="space-y-4">
               <FormField
@@ -196,7 +196,7 @@ const MaintenanceMessageFormPage: React.FC = () => {
           </div>
 
           {/* Configuration du message */}
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="card p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Configuration</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
@@ -238,7 +238,7 @@ const MaintenanceMessageFormPage: React.FC = () => {
           </div>
 
           {/* Planification */}
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="card p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Planification</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
@@ -268,7 +268,7 @@ const MaintenanceMessageFormPage: React.FC = () => {
         {/* Panneau latéral */}
         <div className="space-y-6">
           {/* Audience cible */}
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="card p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Audience cible</h3>
             
             <FormField
@@ -319,7 +319,7 @@ const MaintenanceMessageFormPage: React.FC = () => {
           </div>
 
           {/* Aperçu du message */}
-          <div className="bg-white rounded-lg shadow p-6">
+          <div className="card p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Aperçu</h3>
             
             {formData.title && formData.message ? (
@@ -367,9 +367,9 @@ const MaintenanceMessageFormPage: React.FC = () => {
           </div>
 
           {/* Informations utiles */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h4 className="text-sm font-medium text-blue-800 mb-2">💡 Conseils</h4>
-            <ul className="text-sm text-blue-700 space-y-1">
+          <div className="alert-info p-4">
+            <h4 className="text-sm font-medium text-gray-900 mb-2">💡 Conseils</h4>
+            <ul className="text-sm text-gray-800 space-y-1">
               <li>• Utilisez des titres clairs et concis</li>
               <li>• Précisez les dates et heures de maintenance</li>
               <li>• Informez sur les impacts pour les utilisateurs</li>
